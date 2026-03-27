@@ -1,0 +1,33 @@
+name: Fetch Shuffle Stats
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'  # Every 5 minutes
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch stats from Shuffle API
+        run: |
+          curl -s "https://affiliate.shuffle.com/stats/949cf925-a4e8-47c6-a7cb-3e2d99335d02" -o data.json
+          echo "Fetched at $(date -u)"
+          cat data.json | python3 -c "import sys,json; d=json.load(sys.stdin); print(f'{len(d)} users, {sum(1 for u in d if u[\"lifetimeWagered\"]>0)} active')"
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data.json
+          if git diff --cached --quiet; then
+            echo "No changes"
+          else
+            git commit -m "Update leaderboard data [$(date -u +%Y-%m-%dT%H:%M:%SZ)]"
+            git push
+          fi

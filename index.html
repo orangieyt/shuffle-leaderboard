@@ -711,7 +711,8 @@
 </div>
 
 <script>
-const API = 'https://affiliate.shuffle.com/stats/949cf925-a4e8-47c6-a7cb-3e2d99335d02';
+// Use local cached data (updated every 5 min by GitHub Actions) to avoid CORS/ad-blocker issues
+const API = './data.json';
 
 // Tip data from Orangie — keyed by lowercase username variants
 const TIPS = {
