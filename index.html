@@ -10,23 +10,38 @@
   * { margin: 0; padding: 0; box-sizing: border-box; }
   
   :root {
-    --navy: #0f1923;
     --orange: #FF6B2B;
-    --dark-blue: #1a2332;
-    --light-blue: #2a3441;
-    --text-light: #e2e8f0;
-    --text-gray: #94a3b8;
-    --text-dark: #64748b;
-    --border: #334155;
+    --purple: #8B5CF6;
+    --bg: #0a0a0f;
+    --card-bg: rgba(255, 255, 255, 0.03);
+    --card-border: rgba(255, 255, 255, 0.06);
+    --text-light: #ffffff;
+    --text-gray: #999;
+    --text-dark: #555;
+    --border: rgba(255, 255, 255, 0.06);
     --success: #22c55e;
+    --orange-glow: rgba(255, 107, 43, 0.3);
+    --purple-glow: rgba(139, 92, 246, 0.3);
   }
   
   body {
     font-family: 'Inter', sans-serif;
-    background: var(--navy);
+    background: var(--bg);
     color: var(--text-light);
     min-height: 100vh;
     line-height: 1.5;
+  }
+  
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: 
+      radial-gradient(ellipse at 20% 50%, rgba(255, 107, 43, 0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 20%, rgba(139, 92, 246, 0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 80%, rgba(255, 107, 43, 0.04) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
   }
   
   .container {
@@ -35,17 +50,28 @@
     padding: 0 20px;
   }
   
+  .container, .header .container, .top-three .container, .leaderboard-section .container,
+  .find-ranking .container, .kick-section .container, .footer .container {
+    position: relative;
+    z-index: 1;
+  }
+  
   /* Header */
   .header {
-    background: linear-gradient(135deg, var(--navy) 0%, var(--dark-blue) 100%);
+    background: transparent;
     padding: 40px 0;
     text-align: center;
     border-bottom: 1px solid var(--border);
   }
   
+  .logo-row { display: flex; align-items: center; justify-content: center; gap: 16px; margin-bottom: 20px; }
+  .shuffle-logo { height: 36px; filter: brightness(0) invert(1); }
+  .logo-x { font-size: 18px; font-weight: 900; background: linear-gradient(135deg, var(--orange), var(--purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .orangie-text { font-size: 28px; font-weight: 900; color: var(--orange); letter-spacing: 2px; }
+  
   .countdown-timer {
-    background: rgba(255, 107, 43, 0.1);
-    border: 1px solid var(--orange);
+    background: linear-gradient(135deg, rgba(255, 107, 43, 0.08) 0%, rgba(139, 92, 246, 0.08) 100%);
+    border: 1px solid rgba(255, 107, 43, 0.2);
     border-radius: 12px;
     padding: 20px;
     margin-bottom: 30px;
@@ -89,15 +115,20 @@
   .main-title {
     font-size: 48px;
     font-weight: 900;
-    color: var(--text-light);
+    background: linear-gradient(135deg, var(--orange) 0%, var(--purple) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
     margin-bottom: 10px;
-    text-shadow: 0 0 30px rgba(255, 107, 43, 0.3);
   }
   
   .prize-amount {
     font-size: 32px;
     font-weight: 800;
-    color: var(--orange);
+    background: linear-gradient(135deg, var(--orange), var(--purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
     margin-bottom: 20px;
   }
   
@@ -134,7 +165,7 @@
   .btn-outline {
     background: transparent;
     color: var(--orange);
-    border-color: var(--orange);
+    border-color: rgba(255, 107, 43, 0.5);
   }
   
   .btn-outline:hover {
@@ -145,7 +176,7 @@
   /* Hero Top 3 */
   .top-three {
     padding: 60px 0;
-    background: var(--dark-blue);
+    background: rgba(255, 255, 255, 0.01);
   }
   
   .section-title {
@@ -165,8 +196,8 @@
   }
   
   .hero-card {
-    background: linear-gradient(135deg, var(--light-blue) 0%, var(--dark-blue) 100%);
-    border: 1px solid var(--border);
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
     border-radius: 20px;
     padding: 30px;
     text-align: center;
@@ -223,81 +254,23 @@
   .hero-prize {
     font-size: 28px;
     font-weight: 900;
-    color: var(--success);
-    background: rgba(34, 197, 94, 0.1);
+    background: linear-gradient(135deg, var(--orange), var(--purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
     padding: 10px 20px;
     border-radius: 10px;
     display: inline-block;
   }
   
-  /* Wager Rewards Section */
-  .wager-rewards {
-    background: var(--navy);
-    padding: 60px 0;
-    text-align: center;
-  }
-  
-  .wager-title {
-    font-size: 32px;
-    font-weight: 900;
-    color: var(--orange);
-    margin-bottom: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 15px;
-  }
-  
-  .rewards-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-    max-width: 800px;
-    margin: 0 auto;
-  }
-  
-  .reward-item {
-    background: linear-gradient(135deg, var(--dark-blue) 0%, var(--light-blue) 100%);
-    border: 1px solid var(--border);
-    border-radius: 15px;
-    padding: 25px;
-    transition: all 0.3s ease;
-  }
-  
-  .reward-item:hover {
-    transform: translateY(-3px);
-    border-color: var(--orange);
-    box-shadow: 0 5px 20px rgba(255, 107, 43, 0.2);
-  }
-  
-  .reward-wager {
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--text-light);
-    margin-bottom: 10px;
-  }
-  
-  .reward-amount {
-    font-size: 24px;
-    font-weight: 900;
-    color: var(--orange);
-  }
-  
-  .reward-note {
-    margin-top: 20px;
-    font-size: 16px;
-    color: var(--text-gray);
-    font-weight: 600;
-  }
-  
   /* Leaderboard Table */
   .leaderboard-section {
-    background: var(--dark-blue);
+    background: rgba(255, 255, 255, 0.01);
     padding: 60px 0;
   }
   
   .leaderboard-table {
-    background: var(--navy);
+    background: var(--card-bg);
     border: 1px solid var(--border);
     border-radius: 15px;
     overflow: hidden;
@@ -306,7 +279,7 @@
   }
   
   .table-header {
-    background: var(--light-blue);
+    background: rgba(139, 92, 246, 0.08);
     padding: 20px 30px;
     display: grid;
     grid-template-columns: 80px 1fr 150px 120px;
@@ -423,20 +396,23 @@
   .wagered-amount {
     font-size: 16px;
     font-weight: 700;
-    color: var(--orange);
+    background: linear-gradient(135deg, var(--orange), var(--purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
     text-align: right;
   }
   
   .prize-cell {
     font-size: 16px;
     font-weight: 700;
-    color: var(--success);
+    color: var(--orange);
     text-align: right;
   }
   
   /* Find Your Ranking */
   .find-ranking {
-    background: var(--navy);
+    background: transparent;
     padding: 60px 0;
     text-align: center;
   }
@@ -450,7 +426,7 @@
   .search-input {
     width: 100%;
     padding: 15px 20px;
-    background: var(--dark-blue);
+    background: rgba(255, 255, 255, 0.03);
     border: 2px solid var(--border);
     border-radius: 25px;
     color: var(--text-light);
@@ -469,7 +445,7 @@
   
   /* Kick Stream */
   .kick-section {
-    background: var(--dark-blue);
+    background: rgba(255, 255, 255, 0.01);
     padding: 60px 0;
     text-align: center;
   }
@@ -479,7 +455,7 @@
     margin: 20px auto;
     border-radius: 15px;
     overflow: hidden;
-    background: var(--navy);
+    background: var(--card-bg);
     border: 1px solid var(--border);
   }
   
@@ -487,12 +463,12 @@
     padding: 100px;
     color: var(--text-gray);
     font-size: 18px;
-    background: var(--navy);
+    background: var(--card-bg);
   }
   
   /* Footer */
   .footer {
-    background: var(--navy);
+    background: transparent;
     padding: 40px 0;
     text-align: center;
     border-top: 1px solid var(--border);
@@ -610,6 +586,13 @@
 <body>
 <div class="header">
   <div class="container">
+    <!-- Logo Row -->
+    <div class="logo-row">
+      <span class="orangie-text">ORANGIE</span>
+      <span class="logo-x">×</span>
+      <a href="https://shuffle.com/?r=orangie" target="_blank"><img src="https://shuffle.com/icons/logo.svg" alt="Shuffle" class="shuffle-logo"></a>
+    </div>
+    
     <!-- Countdown Timer -->
     <div class="countdown-timer">
       <div class="countdown-label">Time Until Month End</div>
@@ -652,41 +635,7 @@
   </div>
 </div>
 
-<!-- Wager Rewards Section -->
-<div class="wager-rewards">
-  <div class="container">
-    <h2 class="wager-title">🔥 Wager Rewards 🔥</h2>
-    <div class="rewards-grid">
-      <div class="reward-item">
-        <div class="reward-wager">$10,000 wagered</div>
-        <div class="reward-amount">$20</div>
-      </div>
-      <div class="reward-item">
-        <div class="reward-wager">$20,000 wagered</div>
-        <div class="reward-amount">$40</div>
-      </div>
-      <div class="reward-item">
-        <div class="reward-wager">$30,000 wagered</div>
-        <div class="reward-amount">$60</div>
-      </div>
-      <div class="reward-item">
-        <div class="reward-wager">$40,000 wagered</div>
-        <div class="reward-amount">$80</div>
-      </div>
-      <div class="reward-item">
-        <div class="reward-wager">$50,000 wagered</div>
-        <div class="reward-amount">$100</div>
-      </div>
-      <div class="reward-item">
-        <div class="reward-wager">$100,000 wagered</div>
-        <div class="reward-amount">$200</div>
-      </div>
-    </div>
-    <div class="reward-note">Rate = $20 per $10,000 wagered</div>
-  </div>
-</div>
-
-<!-- Leaderboard Table (Ranks 4-20) -->
+<!-- Leaderboard Table -->
 <div class="leaderboard-section">
   <div class="container">
     <h2 class="section-title">📊 Full Leaderboard</h2>
@@ -961,7 +910,7 @@ async function loadLeaderboard() {
       if (found) {
         const userRank = active.findIndex(u => u.username === found.username) + 1;
         searchResult.innerHTML = `
-          <div style="margin-top: 20px; padding: 20px; background: var(--dark-blue); border-radius: 10px; border: 1px solid var(--border);">
+          <div style="margin-top: 20px; padding: 20px; background: rgba(255, 255, 255, 0.03); border-radius: 10px; border: 1px solid var(--border);">
             <h3 style="color: var(--orange); margin-bottom: 10px;">Found: ${maskUsername(found.username)}</h3>
             <p style="color: var(--text-light);">Rank: #${userRank}</p>
             <p style="color: var(--text-light);">Wagered: ${formatMoney(found.lifetimeWagered)}</p>
