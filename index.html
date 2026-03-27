@@ -822,10 +822,22 @@ function updateCountdown() {
   document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
 }
 
+let retryCount = 0;
+
 async function loadLeaderboard() {
   try {
-    const response = await fetch(API);
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000);
+    
+    const response = await fetch(API, { 
+      signal: controller.signal,
+      headers: { 'Accept': 'application/json' }
+    });
+    clearTimeout(timeoutId);
+    
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const data = await response.json();
+    retryCount = 0;
     
     const active = data
       .filter(user => user.lifetimeWagered > 0)
@@ -944,8 +956,12 @@ async function loadLeaderboard() {
     
   } catch (error) {
     console.error('Failed to load leaderboard:', error);
-    document.getElementById('hero-cards').innerHTML = '<div class="empty">Failed to load data. Retrying...</div>';
-    document.getElementById('leaderboard-rows').innerHTML = '<div class="empty">Failed to load data. Retrying...</div>';
+    retryCount++;
+    const retryIn = Math.min(retryCount * 5, 30);
+    document.getElementById('hero-cards').innerHTML = `<div class="empty">Failed to load data. Retrying in ${retryIn}s...<br><small style="color:#666;font-size:12px">If this persists, try disabling ad blockers or VPN</small></div>`;
+    document.getElementById('leaderboard-rows').innerHTML = `<div class="empty">Failed to load data. Retrying in ${retryIn}s...</div>`;
+    setTimeout(loadLeaderboard, retryIn * 1000);
+    return;
   }
 }
 
