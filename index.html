@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ORANGIE x SHUFFLE Leaderboard</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+  
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #0a0a0f;
+    color: #fff;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: 
+      radial-gradient(ellipse at 20% 50%, rgba(29, 185, 84, 0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 20%, rgba(29, 185, 84, 0.05) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 80%, rgba(29, 185, 84, 0.03) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  
+  .brand {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 6px;
+    color: #1DB954;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  
+  .title {
+    font-size: 42px;
+    font-weight: 900;
+    background: linear-gradient(135deg, #fff 0%, #1DB954 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 8px;
+  }
+  
+  .subtitle {
+    color: #666;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  
+  .prize-pool {
+    background: linear-gradient(135deg, rgba(29, 185, 84, 0.1) 0%, rgba(29, 185, 84, 0.02) 100%);
+    border: 1px solid rgba(29, 185, 84, 0.2);
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 30px;
+    backdrop-filter: blur(10px);
+  }
+  
+  .prize-pool h2 {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: #1DB954;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .prize-grid {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  
+  .prize-item {
+    text-align: center;
+    padding: 16px 24px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    min-width: 100px;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  
+  .prize-item:hover {
+    transform: translateY(-2px);
+    border-color: rgba(29, 185, 84, 0.3);
+  }
+  
+  .prize-item.gold { border-color: rgba(255, 215, 0, 0.3); }
+  .prize-item.silver { border-color: rgba(192, 192, 192, 0.2); }
+  .prize-item.bronze { border-color: rgba(205, 127, 50, 0.2); }
+  
+  .prize-rank {
+    font-size: 24px;
+    margin-bottom: 6px;
+  }
+  
+  .prize-amount {
+    font-size: 22px;
+    font-weight: 800;
+    color: #fff;
+  }
+  
+  .prize-label {
+    font-size: 11px;
+    color: #666;
+    margin-top: 4px;
+    font-weight: 500;
+  }
+  
+  .prize-total {
+    text-align: center;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+  }
+  
+  .prize-total span {
+    font-size: 28px;
+    font-weight: 900;
+    color: #1DB954;
+  }
+  
+  .prize-total small {
+    display: block;
+    font-size: 12px;
+    color: #555;
+    margin-top: 4px;
+  }
+  
+  .leaderboard {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 20px;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+  }
+  
+  .lb-header {
+    display: grid;
+    grid-template-columns: 60px 1fr 150px;
+    padding: 16px 24px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #555;
+    text-transform: uppercase;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+  
+  .lb-row {
+    display: grid;
+    grid-template-columns: 60px 1fr 150px;
+    padding: 18px 24px;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    transition: background 0.2s, transform 0.2s;
+    animation: fadeIn 0.3s ease-out;
+  }
+  
+  .lb-row:hover {
+    background: rgba(29, 185, 84, 0.05);
+  }
+  
+  .lb-row:last-child { border-bottom: none; }
+  
+  .lb-row.top-1 { background: rgba(255, 215, 0, 0.04); }
+  .lb-row.top-2 { background: rgba(192, 192, 192, 0.03); }
+  .lb-row.top-3 { background: rgba(205, 127, 50, 0.03); }
+  
+  .rank {
+    font-weight: 800;
+    font-size: 16px;
+    color: #444;
+  }
+  
+  .top-1 .rank { color: #FFD700; font-size: 20px; }
+  .top-2 .rank { color: #C0C0C0; font-size: 18px; }
+  .top-3 .rank { color: #CD7F32; font-size: 18px; }
+  
+  .username {
+    font-weight: 600;
+    font-size: 15px;
+    color: #ccc;
+  }
+  
+  .top-1 .username, .top-2 .username, .top-3 .username { color: #fff; }
+  
+  .wagered {
+    font-weight: 700;
+    font-size: 16px;
+    color: #1DB954;
+    text-align: right;
+  }
+  
+  .join-section {
+    text-align: center;
+    margin-top: 30px;
+  }
+  
+  .join-btn {
+    display: inline-block;
+    padding: 16px 48px;
+    background: linear-gradient(135deg, #1DB954 0%, #169c46 100%);
+    color: #fff;
+    font-weight: 800;
+    font-size: 16px;
+    text-decoration: none;
+    border-radius: 50px;
+    letter-spacing: 1px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 24px rgba(29, 185, 84, 0.3);
+  }
+  
+  .join-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(29, 185, 84, 0.4);
+  }
+  
+  .join-sub {
+    color: #555;
+    font-size: 12px;
+    margin-top: 10px;
+  }
+  
+  .refresh-note {
+    text-align: center;
+    color: #333;
+    font-size: 11px;
+    margin-top: 20px;
+  }
+  
+  .loading {
+    text-align: center;
+    padding: 60px;
+    color: #555;
+  }
+  
+  .spinner {
+    width: 32px;
+    height: 32px;
+    border: 3px solid rgba(29, 185, 84, 0.2);
+    border-top-color: #1DB954;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto 16px;
+  }
+  
+  @keyframes spin { to { transform: rotate(360deg); } }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+  
+  .empty { text-align: center; padding: 40px; color: #555; }
+  
+  @media (max-width: 600px) {
+    .title { font-size: 28px; }
+    .prize-grid { gap: 8px; }
+    .prize-item { padding: 12px 16px; min-width: 80px; }
+    .prize-amount { font-size: 18px; }
+    .lb-header, .lb-row { grid-template-columns: 50px 1fr 120px; padding: 14px 16px; }
+    .container { padding: 20px 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <div class="brand">ORANGIE × SHUFFLE</div>
+    <h1 class="title">LEADERBOARD</h1>
+    <p class="subtitle">Wager to win — top players take home prizes monthly</p>
+  </div>
+  
+  <div class="prize-pool">
+    <h2>💰 Monthly Prize Pool</h2>
+    <div class="prize-grid">
+      <div class="prize-item gold">
+        <div class="prize-rank">🥇</div>
+        <div class="prize-amount">$200</div>
+        <div class="prize-label">1st Place</div>
+      </div>
+      <div class="prize-item silver">
+        <div class="prize-rank">🥈</div>
+        <div class="prize-amount">$150</div>
+        <div class="prize-label">2nd Place</div>
+      </div>
+      <div class="prize-item bronze">
+        <div class="prize-rank">🥉</div>
+        <div class="prize-amount">$100</div>
+        <div class="prize-label">3rd Place</div>
+      </div>
+      <div class="prize-item">
+        <div class="prize-rank">🏅</div>
+        <div class="prize-amount">$50</div>
+        <div class="prize-label">4th — 14th</div>
+      </div>
+    </div>
+    <div class="prize-total">
+      <span>$1,000</span>
+      <small>Total Monthly Prizes</small>
+    </div>
+  </div>
+  
+  <div class="leaderboard">
+    <div class="lb-header">
+      <div>Rank</div>
+      <div>Player</div>
+      <div style="text-align:right">Wagered</div>
+    </div>
+    <div id="rows">
+      <div class="loading">
+        <div class="spinner"></div>
+        Loading leaderboard...
+      </div>
+    </div>
+  </div>
+  
+  <div class="join-section">
+    <a href="https://shuffle.com/?r=orangie" target="_blank" class="join-btn">JOIN NOW</a>
+    <p class="join-sub">Use code <strong style="color:#1DB954">orangie</strong> when signing up</p>
+  </div>
+  
+  <p class="refresh-note" id="refresh-note"></p>
+</div>
+
+<script>
+const API = 'https://affiliate.shuffle.com/stats/949cf925-a4e8-47c6-a7cb-3e2d99335d02';
+const rowsEl = document.getElementById('rows');
+const noteEl = document.getElementById('refresh-note');
+
+function mask(u) {
+  return u || '???';
+}
+
+function fmt(n) {
+  return '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+
+async function load() {
+  try {
+    const r = await fetch(API);
+    const data = await r.json();
+    
+    const active = data
+      .filter(u => u.lifetimeWagered > 0)
+      .sort((a, b) => b.lifetimeWagered - a.lifetimeWagered);
+    
+    if (!active.length) {
+      rowsEl.innerHTML = '<div class="empty">No active players yet. Be the first!</div>';
+      return;
+    }
+    
+    rowsEl.innerHTML = active.map((u, i) => {
+      const rank = i + 1;
+      const cls = rank <= 3 ? ` top-${rank}` : '';
+      const medal = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : `#${rank}`;
+      return `<div class="lb-row${cls}" style="animation-delay:${i * 0.03}s">
+        <div class="rank">${medal}</div>
+        <div class="username">${mask(u.username)}</div>
+        <div class="wagered">${fmt(u.lifetimeWagered)}</div>
+      </div>`;
+    }).join('');
+    
+    const now = new Date();
+    noteEl.textContent = `Auto-refreshes every 60s · Last updated ${now.toLocaleTimeString()}`;
+  } catch (e) {
+    rowsEl.innerHTML = '<div class="empty">Failed to load data. Retrying...</div>';
+  }
+}
+
+load();
+setInterval(load, 60000);
+</script>
+</body>
+</html>
