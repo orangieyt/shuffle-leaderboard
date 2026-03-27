@@ -10,237 +10,748 @@
   * { margin: 0; padding: 0; box-sizing: border-box; }
   
   :root {
+    --navy: #0f1923;
     --orange: #FF6B2B;
-    --purple: #8B5CF6;
-    --orange-glow: rgba(255, 107, 43, 0.3);
-    --purple-glow: rgba(139, 92, 246, 0.3);
+    --dark-blue: #1a2332;
+    --light-blue: #2a3441;
+    --text-light: #e2e8f0;
+    --text-gray: #94a3b8;
+    --text-dark: #64748b;
+    --border: #334155;
+    --success: #22c55e;
   }
   
   body {
     font-family: 'Inter', sans-serif;
-    background: #0a0a0f;
-    color: #fff;
+    background: var(--navy);
+    color: var(--text-light);
     min-height: 100vh;
-    overflow-x: hidden;
+    line-height: 1.5;
   }
   
-  body::before {
-    content: '';
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: 
-      radial-gradient(ellipse at 20% 50%, rgba(255, 107, 43, 0.08) 0%, transparent 50%),
-      radial-gradient(ellipse at 80% 20%, rgba(139, 92, 246, 0.08) 0%, transparent 50%),
-      radial-gradient(ellipse at 50% 80%, rgba(255, 107, 43, 0.04) 0%, transparent 50%);
-    pointer-events: none;
-    z-index: 0;
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
   }
   
-  .container { max-width: 800px; margin: 0 auto; padding: 40px 20px; position: relative; z-index: 1; }
+  /* Header */
+  .header {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--dark-blue) 100%);
+    padding: 40px 0;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+  }
   
-  .header { text-align: center; margin-bottom: 40px; }
+  .countdown-timer {
+    background: rgba(255, 107, 43, 0.1);
+    border: 1px solid var(--orange);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 30px;
+    display: inline-block;
+  }
   
-  .logo-row { display: flex; align-items: center; justify-content: center; gap: 16px; margin-bottom: 16px; }
-  .shuffle-logo { height: 36px; filter: brightness(0) invert(1); }
-  .logo-x { font-size: 18px; font-weight: 900; background: linear-gradient(135deg, var(--orange), var(--purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-  .orangie-text { font-size: 28px; font-weight: 900; color: var(--orange); letter-spacing: 2px; }
+  .countdown-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--orange);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+  }
   
-  .title { font-size: 42px; font-weight: 900; background: linear-gradient(135deg, var(--orange) 0%, var(--purple) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 8px; }
-  .subtitle { color: #666; font-size: 14px; font-weight: 500; }
+  .countdown-display {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+  }
   
-  .prize-pool { background: linear-gradient(135deg, rgba(255, 107, 43, 0.08) 0%, rgba(139, 92, 246, 0.08) 100%); border: 1px solid rgba(255, 107, 43, 0.2); border-radius: 20px; padding: 30px; margin-bottom: 30px; backdrop-filter: blur(10px); }
-  .prize-pool h2 { font-size: 13px; font-weight: 700; letter-spacing: 3px; color: var(--orange); text-transform: uppercase; margin-bottom: 20px; text-align: center; }
-  .prize-grid { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
-  .prize-item { text-align: center; padding: 16px 24px; border-radius: 14px; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.06); min-width: 100px; transition: transform 0.2s, border-color 0.2s; }
-  .prize-item:hover { transform: translateY(-2px); border-color: rgba(139, 92, 246, 0.4); }
-  .prize-item.gold { border-color: rgba(255, 215, 0, 0.3); }
-  .prize-item.silver { border-color: rgba(192, 192, 192, 0.2); }
-  .prize-item.bronze { border-color: rgba(205, 127, 50, 0.2); }
-  .prize-rank { font-size: 24px; margin-bottom: 6px; }
-  .prize-amount { font-size: 22px; font-weight: 800; color: #fff; }
-  .prize-label { font-size: 11px; color: #666; margin-top: 4px; font-weight: 500; }
-  .prize-total { text-align: center; margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.06); }
-  .prize-total span { font-size: 28px; font-weight: 900; background: linear-gradient(135deg, var(--orange), var(--purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-  .prize-total small { display: block; font-size: 12px; color: #555; margin-top: 4px; }
+  .countdown-unit {
+    text-align: center;
+  }
   
-  .leaderboard { background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(139, 92, 246, 0.15); border-radius: 20px; overflow: hidden; backdrop-filter: blur(10px); }
-  .lb-header { display: grid; grid-template-columns: 60px 1fr 150px; padding: 16px 24px; font-size: 11px; font-weight: 700; letter-spacing: 2px; color: #555; text-transform: uppercase; border-bottom: 1px solid rgba(255, 255, 255, 0.06); }
+  .countdown-number {
+    font-size: 24px;
+    font-weight: 900;
+    color: var(--text-light);
+    display: block;
+  }
   
-  .lb-row { display: grid; grid-template-columns: 60px 1fr 150px; padding: 18px 24px; align-items: center; border-bottom: 1px solid rgba(255, 255, 255, 0.03); transition: background 0.2s; animation: fadeIn 0.3s ease-out; }
-  .lb-row:hover { background: rgba(139, 92, 246, 0.05); }
-  .lb-row:last-child { border-bottom: none; }
-  .lb-row.top-1 { background: rgba(255, 215, 0, 0.04); }
-  .lb-row.top-2 { background: rgba(192, 192, 192, 0.03); }
-  .lb-row.top-3 { background: rgba(205, 127, 50, 0.03); }
+  .countdown-text {
+    font-size: 11px;
+    color: var(--text-gray);
+    text-transform: uppercase;
+    font-weight: 600;
+  }
   
-  .rank { font-weight: 800; font-size: 16px; color: #444; }
-  .top-1 .rank { color: #FFD700; font-size: 20px; }
-  .top-2 .rank { color: #C0C0C0; font-size: 18px; }
-  .top-3 .rank { color: #CD7F32; font-size: 18px; }
+  .main-title {
+    font-size: 48px;
+    font-weight: 900;
+    color: var(--text-light);
+    margin-bottom: 10px;
+    text-shadow: 0 0 30px rgba(255, 107, 43, 0.3);
+  }
   
-  .username-col { display: flex; flex-direction: column; gap: 4px; }
-  .username { font-weight: 600; font-size: 15px; color: #ccc; }
-  .top-1 .username, .top-2 .username, .top-3 .username { color: #fff; }
+  .prize-amount {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--orange);
+    margin-bottom: 20px;
+  }
+  
+  .header-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .btn {
+    padding: 12px 30px;
+    border-radius: 25px;
+    font-weight: 700;
+    text-decoration: none;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    display: inline-block;
+  }
+  
+  .btn-orange {
+    background: var(--orange);
+    color: white;
+  }
+  
+  .btn-orange:hover {
+    background: #e85a1f;
+    box-shadow: 0 5px 15px rgba(255, 107, 43, 0.4);
+  }
+  
+  .btn-outline {
+    background: transparent;
+    color: var(--orange);
+    border-color: var(--orange);
+  }
+  
+  .btn-outline:hover {
+    background: var(--orange);
+    color: white;
+  }
+  
+  /* Hero Top 3 */
+  .top-three {
+    padding: 60px 0;
+    background: var(--dark-blue);
+  }
+  
+  .section-title {
+    text-align: center;
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--text-light);
+    margin-bottom: 40px;
+  }
+  
+  .hero-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  
+  .hero-card {
+    background: linear-gradient(135deg, var(--light-blue) 0%, var(--dark-blue) 100%);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 30px;
+    text-align: center;
+    position: relative;
+    transition: transform 0.3s ease;
+  }
+  
+  .hero-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .hero-card.first {
+    border-color: #FFD700;
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
+  }
+  
+  .hero-card.second {
+    border-color: #C0C0C0;
+    box-shadow: 0 0 30px rgba(192, 192, 192, 0.2);
+  }
+  
+  .hero-card.third {
+    border-color: #CD7F32;
+    box-shadow: 0 0 30px rgba(205, 127, 50, 0.2);
+  }
+  
+  .crown {
+    font-size: 40px;
+    margin-bottom: 15px;
+    display: block;
+  }
+  
+  .hero-rank {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-gray);
+    margin-bottom: 10px;
+  }
+  
+  .hero-username {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--text-light);
+    margin-bottom: 15px;
+  }
+  
+  .hero-wagered {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--orange);
+    margin-bottom: 15px;
+  }
+  
+  .hero-prize {
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--success);
+    background: rgba(34, 197, 94, 0.1);
+    padding: 10px 20px;
+    border-radius: 10px;
+    display: inline-block;
+  }
+  
+  /* Wager Rewards Section */
+  .wager-rewards {
+    background: var(--navy);
+    padding: 60px 0;
+    text-align: center;
+  }
+  
+  .wager-title {
+    font-size: 32px;
+    font-weight: 900;
+    color: var(--orange);
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+  }
+  
+  .rewards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .reward-item {
+    background: linear-gradient(135deg, var(--dark-blue) 0%, var(--light-blue) 100%);
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    padding: 25px;
+    transition: all 0.3s ease;
+  }
+  
+  .reward-item:hover {
+    transform: translateY(-3px);
+    border-color: var(--orange);
+    box-shadow: 0 5px 20px rgba(255, 107, 43, 0.2);
+  }
+  
+  .reward-wager {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-light);
+    margin-bottom: 10px;
+  }
+  
+  .reward-amount {
+    font-size: 24px;
+    font-weight: 900;
+    color: var(--orange);
+  }
+  
+  .reward-note {
+    margin-top: 20px;
+    font-size: 16px;
+    color: var(--text-gray);
+    font-weight: 600;
+  }
+  
+  /* Leaderboard Table */
+  .leaderboard-section {
+    background: var(--dark-blue);
+    padding: 60px 0;
+  }
+  
+  .leaderboard-table {
+    background: var(--navy);
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    overflow: hidden;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  
+  .table-header {
+    background: var(--light-blue);
+    padding: 20px 30px;
+    display: grid;
+    grid-template-columns: 80px 1fr 150px 120px;
+    gap: 20px;
+    font-weight: 700;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-gray);
+  }
+  
+  .table-row {
+    padding: 20px 30px;
+    display: grid;
+    grid-template-columns: 80px 1fr 150px 120px;
+    gap: 20px;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.3s ease;
+  }
+  
+  .table-row:hover {
+    background: rgba(255, 107, 43, 0.05);
+  }
+  
+  .table-row:last-child {
+    border-bottom: none;
+  }
+  
+  .rank-number {
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--text-gray);
+  }
+  
+  .player-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  .player-name {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-light);
+  }
   
   .tip-badge {
     display: inline-flex;
     align-items: center;
-    gap: 4px;
+    gap: 5px;
     font-size: 11px;
     font-weight: 600;
     color: var(--orange);
     cursor: pointer;
-    padding: 2px 8px;
-    border-radius: 20px;
+    padding: 4px 10px;
+    border-radius: 12px;
     background: rgba(255, 107, 43, 0.1);
     border: 1px solid rgba(255, 107, 43, 0.2);
     transition: all 0.2s;
     width: fit-content;
   }
-  .tip-badge:hover { background: rgba(255, 107, 43, 0.2); border-color: rgba(255, 107, 43, 0.4); }
-  .tip-badge .arrow { transition: transform 0.2s; font-size: 8px; }
-  .tip-badge.open .arrow { transform: rotate(180deg); }
+  
+  .tip-badge:hover {
+    background: rgba(255, 107, 43, 0.2);
+    border-color: rgba(255, 107, 43, 0.4);
+  }
   
   .tip-details {
     display: none;
-    margin-top: 8px;
-    padding: 10px 14px;
+    margin-top: 10px;
+    padding: 15px;
     background: rgba(255, 107, 43, 0.05);
     border: 1px solid rgba(255, 107, 43, 0.1);
     border-radius: 10px;
     grid-column: 1 / -1;
   }
-  .tip-details.open { display: block; animation: fadeIn 0.2s ease-out; }
+  
+  .tip-details.open {
+    display: block;
+  }
   
   .tip-details-header {
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 700;
     color: var(--orange);
-    letter-spacing: 1px;
+    margin-bottom: 10px;
     text-transform: uppercase;
-    margin-bottom: 8px;
-    padding-bottom: 6px;
-    border-bottom: 1px solid rgba(255, 107, 43, 0.1);
   }
   
   .tip-line {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 5px 0;
-    font-size: 13px;
+    padding: 8px 0;
+    font-size: 14px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   }
-  .tip-line + .tip-line { border-top: 1px solid rgba(255, 255, 255, 0.03); }
-  .tip-amt { font-weight: 700; color: var(--orange); }
-  .tip-date { color: #666; font-size: 11px; }
   
-  .wagered { font-weight: 700; font-size: 16px; background: linear-gradient(135deg, var(--orange), var(--purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-align: right; }
+  .tip-line:last-child {
+    border-bottom: none;
+  }
   
-  .join-section { text-align: center; margin-top: 30px; }
-  .join-btn { display: inline-block; padding: 16px 48px; background: linear-gradient(135deg, var(--orange) 0%, var(--purple) 100%); color: #fff; font-weight: 800; font-size: 16px; text-decoration: none; border-radius: 50px; letter-spacing: 1px; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 4px 24px var(--orange-glow); }
-  .join-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 32px var(--purple-glow); }
-  .join-sub { color: #555; font-size: 12px; margin-top: 10px; }
-  .join-sub strong { background: linear-gradient(135deg, var(--orange), var(--purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .tip-amt {
+    font-weight: 700;
+    color: var(--orange);
+  }
   
-  .refresh-note { text-align: center; color: #333; font-size: 11px; margin-top: 20px; }
-  .loading { text-align: center; padding: 60px; color: #555; }
-  .spinner { width: 32px; height: 32px; border: 3px solid rgba(139, 92, 246, 0.2); border-top-color: var(--orange); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 16px; }
+  .tip-date {
+    color: var(--text-gray);
+    font-size: 12px;
+  }
   
-  @keyframes spin { to { transform: rotate(360deg); } }
-  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+  .wagered-amount {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--orange);
+    text-align: right;
+  }
   
-  .empty { text-align: center; padding: 40px; color: #555; }
+  .prize-cell {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--success);
+    text-align: right;
+  }
   
-  .powered-by { text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.04); }
-  .powered-by img { height: 24px; filter: brightness(0) invert(1); opacity: 0.4; transition: opacity 0.2s; }
-  .powered-by img:hover { opacity: 0.7; }
-  .powered-by span { display: block; font-size: 10px; color: #333; margin-bottom: 8px; letter-spacing: 2px; text-transform: uppercase; }
+  /* Find Your Ranking */
+  .find-ranking {
+    background: var(--navy);
+    padding: 60px 0;
+    text-align: center;
+  }
   
-  @media (max-width: 600px) {
-    .title { font-size: 28px; }
-    .orangie-text { font-size: 22px; }
-    .shuffle-logo { height: 28px; }
-    .prize-grid { gap: 8px; }
-    .prize-item { padding: 12px 16px; min-width: 80px; }
-    .prize-amount { font-size: 18px; }
-    .lb-header, .lb-row { grid-template-columns: 50px 1fr 120px; padding: 14px 16px; }
-    .container { padding: 20px 12px; }
+  .search-box {
+    max-width: 400px;
+    margin: 20px auto;
+    position: relative;
+  }
+  
+  .search-input {
+    width: 100%;
+    padding: 15px 20px;
+    background: var(--dark-blue);
+    border: 2px solid var(--border);
+    border-radius: 25px;
+    color: var(--text-light);
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.3s ease;
+  }
+  
+  .search-input:focus {
+    border-color: var(--orange);
+  }
+  
+  .search-input::placeholder {
+    color: var(--text-gray);
+  }
+  
+  /* Kick Stream */
+  .kick-section {
+    background: var(--dark-blue);
+    padding: 60px 0;
+    text-align: center;
+  }
+  
+  .kick-embed {
+    max-width: 800px;
+    margin: 20px auto;
+    border-radius: 15px;
+    overflow: hidden;
+    background: var(--navy);
+    border: 1px solid var(--border);
+  }
+  
+  .kick-placeholder {
+    padding: 100px;
+    color: var(--text-gray);
+    font-size: 18px;
+    background: var(--navy);
+  }
+  
+  /* Footer */
+  .footer {
+    background: var(--navy);
+    padding: 40px 0;
+    text-align: center;
+    border-top: 1px solid var(--border);
+  }
+  
+  .footer-code {
+    font-size: 24px;
+    font-weight: 900;
+    color: var(--orange);
+    margin-bottom: 20px;
+  }
+  
+  .social-links {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+  
+  .social-link {
+    color: var(--text-gray);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+  }
+  
+  .social-link:hover {
+    color: var(--orange);
+  }
+  
+  .loading {
+    text-align: center;
+    padding: 60px;
+    color: var(--text-gray);
+  }
+  
+  .spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(255, 107, 43, 0.2);
+    border-top-color: var(--orange);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 20px;
+  }
+  
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+  
+  .empty {
+    text-align: center;
+    padding: 60px;
+    color: var(--text-gray);
+    font-size: 18px;
+  }
+  
+  .refresh-note {
+    text-align: center;
+    color: var(--text-dark);
+    font-size: 12px;
+    margin-top: 20px;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .container {
+      padding: 0 15px;
+    }
+    
+    .main-title {
+      font-size: 36px;
+    }
+    
+    .prize-amount {
+      font-size: 24px;
+    }
+    
+    .countdown-display {
+      gap: 10px;
+    }
+    
+    .countdown-number {
+      font-size: 18px;
+    }
+    
+    .hero-cards {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+    
+    .rewards-grid {
+      grid-template-columns: 1fr;
+      gap: 15px;
+    }
+    
+    .table-header,
+    .table-row {
+      grid-template-columns: 60px 1fr 120px 80px;
+      gap: 10px;
+      padding: 15px 20px;
+    }
+    
+    .section-title {
+      font-size: 24px;
+    }
+    
+    .social-links {
+      gap: 15px;
+    }
   }
 </style>
 </head>
 <body>
-<div class="container">
-  <div class="header">
-    <div class="logo-row">
-      <span class="orangie-text">ORANGIE</span>
-      <span class="logo-x">×</span>
-      <a href="https://shuffle.com/?r=orangie" target="_blank"><img src="https://shuffle.com/icons/logo.svg" alt="Shuffle" class="shuffle-logo"></a>
-    </div>
-    <h1 class="title">LEADERBOARD</h1>
-    <p class="subtitle">Wager to win — top players take home prizes monthly</p>
-  </div>
-  
-  <div class="prize-pool">
-    <h2>💰 Monthly Prize Pool</h2>
-    <div class="prize-grid">
-      <div class="prize-item gold">
-        <div class="prize-rank">🥇</div>
-        <div class="prize-amount">$200</div>
-        <div class="prize-label">1st Place</div>
-      </div>
-      <div class="prize-item silver">
-        <div class="prize-rank">🥈</div>
-        <div class="prize-amount">$150</div>
-        <div class="prize-label">2nd Place</div>
-      </div>
-      <div class="prize-item bronze">
-        <div class="prize-rank">🥉</div>
-        <div class="prize-amount">$100</div>
-        <div class="prize-label">3rd Place</div>
-      </div>
-      <div class="prize-item">
-        <div class="prize-rank">🏅</div>
-        <div class="prize-amount">$50</div>
-        <div class="prize-label">4th — 14th</div>
+<div class="header">
+  <div class="container">
+    <!-- Countdown Timer -->
+    <div class="countdown-timer">
+      <div class="countdown-label">Time Until Month End</div>
+      <div class="countdown-display">
+        <div class="countdown-unit">
+          <span class="countdown-number" id="days">--</span>
+          <span class="countdown-text">Days</span>
+        </div>
+        <div class="countdown-unit">
+          <span class="countdown-number" id="hours">--</span>
+          <span class="countdown-text">Hrs</span>
+        </div>
+        <div class="countdown-unit">
+          <span class="countdown-number" id="minutes">--</span>
+          <span class="countdown-text">Mins</span>
+        </div>
       </div>
     </div>
-    <div class="prize-total">
-      <span>$1,000</span>
-      <small>Total Monthly Prizes</small>
+    
+    <h1 class="main-title">JOIN THE LEADERBOARD!</h1>
+    <div class="prize-amount">$1,000 Total Prize Pool</div>
+    
+    <div class="header-buttons">
+      <a href="#rules" class="btn btn-outline">Rules</a>
+      <a href="https://shuffle.com/?r=orangie" class="btn btn-orange">CODE: orangie</a>
     </div>
   </div>
-  
-  <div class="leaderboard">
-    <div class="lb-header">
-      <div>Rank</div>
-      <div>Player</div>
-      <div style="text-align:right">Wagered</div>
-    </div>
-    <div id="rows">
+</div>
+
+<!-- Top 3 Hero Cards -->
+<div class="top-three">
+  <div class="container">
+    <h2 class="section-title">🏆 Top Performers</h2>
+    <div class="hero-cards" id="hero-cards">
       <div class="loading">
         <div class="spinner"></div>
-        Loading leaderboard...
+        Loading top performers...
       </div>
     </div>
   </div>
-  
-  <div class="join-section">
-    <a href="https://shuffle.com/?r=orangie" target="_blank" class="join-btn">JOIN NOW</a>
-    <p class="join-sub">Use code <strong>orangie</strong> when signing up</p>
+</div>
+
+<!-- Wager Rewards Section -->
+<div class="wager-rewards">
+  <div class="container">
+    <h2 class="wager-title">🔥 Wager Rewards 🔥</h2>
+    <div class="rewards-grid">
+      <div class="reward-item">
+        <div class="reward-wager">$10,000 wagered</div>
+        <div class="reward-amount">$20</div>
+      </div>
+      <div class="reward-item">
+        <div class="reward-wager">$20,000 wagered</div>
+        <div class="reward-amount">$40</div>
+      </div>
+      <div class="reward-item">
+        <div class="reward-wager">$30,000 wagered</div>
+        <div class="reward-amount">$60</div>
+      </div>
+      <div class="reward-item">
+        <div class="reward-wager">$40,000 wagered</div>
+        <div class="reward-amount">$80</div>
+      </div>
+      <div class="reward-item">
+        <div class="reward-wager">$50,000 wagered</div>
+        <div class="reward-amount">$100</div>
+      </div>
+      <div class="reward-item">
+        <div class="reward-wager">$100,000 wagered</div>
+        <div class="reward-amount">$200</div>
+      </div>
+    </div>
+    <div class="reward-note">Rate = $20 per $10,000 wagered</div>
   </div>
-  
-  <div class="powered-by">
-    <span>Powered by</span>
-    <a href="https://shuffle.com/?r=orangie" target="_blank"><img src="https://shuffle.com/icons/logo.svg" alt="Shuffle"></a>
+</div>
+
+<!-- Leaderboard Table (Ranks 4-20) -->
+<div class="leaderboard-section">
+  <div class="container">
+    <h2 class="section-title">📊 Full Leaderboard</h2>
+    <div class="leaderboard-table">
+      <div class="table-header">
+        <div>Rank</div>
+        <div>Player</div>
+        <div>Wagered</div>
+        <div>Prize</div>
+      </div>
+      <div id="leaderboard-rows">
+        <div class="loading">
+          <div class="spinner"></div>
+          Loading leaderboard...
+        </div>
+      </div>
+    </div>
   </div>
-  
-  <p class="refresh-note" id="refresh-note"></p>
+</div>
+
+<!-- Find Your Ranking -->
+<div class="find-ranking">
+  <div class="container">
+    <h2 class="section-title">🔍 FIND YOUR RANKING</h2>
+    <div class="search-box">
+      <input type="text" class="search-input" placeholder="Enter your username..." id="search-input">
+    </div>
+    <div id="search-result"></div>
+  </div>
+</div>
+
+<!-- Kick Stream Section -->
+<div class="kick-section">
+  <div class="container">
+    <h2 class="section-title">🎮 Watch Orangie Live</h2>
+    <div class="kick-embed">
+      <iframe 
+        src="https://player.kick.com/orangie" 
+        width="100%" 
+        height="450"
+        frameborder="0"
+        scrolling="no"
+        allowfullscreen>
+      </iframe>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  <div class="container">
+    <div class="footer-code">USE CODE: ORANGIE</div>
+    <div class="social-links">
+      <a href="https://x.com/orangie" target="_blank" class="social-link">X: @orangie</a>
+      <a href="https://youtube.com/@orangieweb3" target="_blank" class="social-link">YouTube</a>
+      <a href="https://instagram.com/orangieyt" target="_blank" class="social-link">Instagram</a>
+      <a href="https://kick.com/orangie" target="_blank" class="social-link">Kick</a>
+    </div>
+    <a href="https://shuffle.com/?r=orangie" class="btn btn-orange">Contact Support</a>
+    <p class="refresh-note" id="refresh-note"></p>
+  </div>
 </div>
 
 <script>
 const API = 'https://affiliate.shuffle.com/stats/949cf925-a4e8-47c6-a7cb-3e2d99335d02';
-const rowsEl = document.getElementById('rows');
-const noteEl = document.getElementById('refresh-note');
 
 // Tip data from Orangie — keyed by lowercase username variants
 const TIPS = {
@@ -295,7 +806,7 @@ const TIPS = {
   ]
 };
 
-// Map affiliate usernames to tip usernames (lowercase)
+// Username mapping for affiliate to tip usernames
 const USERNAME_MAP = {
   slackzquant: "slackzquant",
   mninvestz: "mninvestz",
@@ -309,75 +820,182 @@ function getTips(username) {
   return TIPS[lower] || TIPS[USERNAME_MAP[lower]] || null;
 }
 
-function fmt(n) {
-  return '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+function maskUsername(username) {
+  if (username.length <= 4) return username;
+  return username.substring(0, 2) + '***' + username.substring(username.length - 2);
 }
 
-function fmtTip(n) {
-  return '$' + n.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+function formatMoney(amount) {
+  return '$' + amount.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
 }
 
-function toggleTip(el) {
-  const badge = el;
-  const details = badge.parentElement.querySelector('.tip-details');
-  badge.classList.toggle('open');
-  details.classList.toggle('open');
+function getPrizeForRank(rank) {
+  if (rank === 1) return '$200';
+  if (rank === 2) return '$150';
+  if (rank === 3) return '$100';
+  if (rank >= 4 && rank <= 14) return '$50';
+  return '-';
 }
 
-async function load() {
-  try {
-    const r = await fetch(API);
-    const data = await r.json();
-    
-    const active = data
-      .filter(u => u.lifetimeWagered > 0)
-      .sort((a, b) => b.lifetimeWagered - a.lifetimeWagered);
-    
-    if (!active.length) {
-      rowsEl.innerHTML = '<div class="empty">No active players yet. Be the first!</div>';
-      return;
+function toggleTipDetails(badge) {
+  const details = badge.parentElement.parentElement.querySelector('.tip-details');
+  if (details) {
+    details.classList.toggle('open');
+    const arrow = badge.querySelector('.arrow');
+    if (arrow) {
+      arrow.textContent = details.classList.contains('open') ? '▲' : '▼';
     }
-    
-    rowsEl.innerHTML = active.map((u, i) => {
-      const rank = i + 1;
-      const cls = rank <= 3 ? ` top-${rank}` : '';
-      const medal = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : `#${rank}`;
-      const tips = getTips(u.username);
-      const tipTotal = tips ? tips.reduce((s, t) => s + t.amount, 0) : 0;
-      
-      let tipHtml = '';
-      if (tips) {
-        const detailLines = tips
-          .sort((a, b) => new Date(b.date) - new Date(a.date))
-          .map(t => `<div class="tip-line"><span class="tip-amt">${fmtTip(t.amount)}</span><span class="tip-date">${t.date}</span></div>`)
-          .join('');
-        tipHtml = `
-          <div class="tip-badge" onclick="toggleTip(this)">🍊 Tipped ${fmtTip(tipTotal)} by Orangie <span class="arrow">▼</span></div>
-          <div class="tip-details">
-            <div class="tip-details-header">🍊 Tip History from Orangie</div>
-            ${detailLines}
-          </div>`;
-      }
-      
-      return `<div class="lb-row${cls}" style="animation-delay:${i * 0.03}s">
-        <div class="rank">${medal}</div>
-        <div class="username-col">
-          <div class="username">${u.username || '???'}</div>
-          ${tipHtml}
-        </div>
-        <div class="wagered">${fmt(u.lifetimeWagered)}</div>
-      </div>`;
-    }).join('');
-    
-    const now = new Date();
-    noteEl.textContent = `Auto-refreshes every 60s · Last updated ${now.toLocaleTimeString()}`;
-  } catch (e) {
-    rowsEl.innerHTML = '<div class="empty">Failed to load data. Retrying...</div>';
   }
 }
 
-load();
-setInterval(load, 60000);
+function updateCountdown() {
+  const now = new Date();
+  const nextMonth = new Date(now.getFullYear(), now.getMonth() + 1, 1);
+  const timeLeft = nextMonth - now;
+  
+  const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+  
+  document.getElementById('days').textContent = days.toString().padStart(2, '0');
+  document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+  document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+}
+
+async function loadLeaderboard() {
+  try {
+    const response = await fetch(API);
+    const data = await response.json();
+    
+    const active = data
+      .filter(user => user.lifetimeWagered > 0)
+      .sort((a, b) => b.lifetimeWagered - a.lifetimeWagered);
+    
+    if (!active.length) {
+      document.getElementById('hero-cards').innerHTML = '<div class="empty">No active players yet. Be the first!</div>';
+      document.getElementById('leaderboard-rows').innerHTML = '<div class="empty">No data available.</div>';
+      return;
+    }
+    
+    // Update hero cards (top 3)
+    const heroCardsHtml = active.slice(0, 3).map((user, index) => {
+      const rank = index + 1;
+      const cardClass = rank === 1 ? 'first' : rank === 2 ? 'second' : 'third';
+      const crown = rank === 1 ? '👑' : rank === 2 ? '🥈' : '🥉';
+      
+      return `
+        <div class="hero-card ${cardClass}">
+          <span class="crown">${crown}</span>
+          <div class="hero-rank">${rank === 1 ? '1st' : rank === 2 ? '2nd' : '3rd'} Place</div>
+          <div class="hero-username">${maskUsername(user.username || '???')}</div>
+          <div class="hero-wagered">${formatMoney(user.lifetimeWagered)} wagered</div>
+          <div class="hero-prize">${getPrizeForRank(rank)}</div>
+        </div>
+      `;
+    }).join('');
+    
+    document.getElementById('hero-cards').innerHTML = heroCardsHtml;
+    
+    // Update leaderboard table (all players)
+    const leaderboardHtml = active.map((user, index) => {
+      const rank = index + 1;
+      const tips = getTips(user.username);
+      const tipTotal = tips ? tips.reduce((sum, tip) => sum + tip.amount, 0) : 0;
+      
+      let tipHtml = '';
+      if (tips && tipTotal > 0) {
+        const detailLines = tips
+          .sort((a, b) => new Date(b.date) - new Date(a.date))
+          .map(tip => `
+            <div class="tip-line">
+              <span class="tip-amt">${formatMoney(tip.amount)}</span>
+              <span class="tip-date">${tip.date}</span>
+            </div>
+          `).join('');
+        
+        tipHtml = `
+          <div class="tip-badge" onclick="toggleTipDetails(this)">
+            🍊 Tipped ${formatMoney(tipTotal)} by Orangie <span class="arrow">▼</span>
+          </div>
+        `;
+        
+        // Add tip details row after this row
+        tipHtml += `
+          <div class="tip-details">
+            <div class="tip-details-header">🍊 Tip History from Orangie</div>
+            ${detailLines}
+          </div>
+        `;
+      }
+      
+      return `
+        <div class="table-row">
+          <div class="rank-number">#${rank}</div>
+          <div class="player-info">
+            <div class="player-name">${maskUsername(user.username || '???')}</div>
+            ${tipHtml}
+          </div>
+          <div class="wagered-amount">${formatMoney(user.lifetimeWagered)}</div>
+          <div class="prize-cell">${getPrizeForRank(rank)}</div>
+        </div>
+      `;
+    }).join('');
+    
+    document.getElementById('leaderboard-rows').innerHTML = leaderboardHtml;
+    
+    // Update search functionality
+    const searchInput = document.getElementById('search-input');
+    const searchResult = document.getElementById('search-result');
+    
+    searchInput.addEventListener('input', function() {
+      const query = this.value.trim().toLowerCase();
+      if (!query) {
+        searchResult.innerHTML = '';
+        return;
+      }
+      
+      const found = active.find((user, index) => 
+        user.username.toLowerCase().includes(query)
+      );
+      
+      if (found) {
+        const userRank = active.findIndex(u => u.username === found.username) + 1;
+        searchResult.innerHTML = `
+          <div style="margin-top: 20px; padding: 20px; background: var(--dark-blue); border-radius: 10px; border: 1px solid var(--border);">
+            <h3 style="color: var(--orange); margin-bottom: 10px;">Found: ${maskUsername(found.username)}</h3>
+            <p style="color: var(--text-light);">Rank: #${userRank}</p>
+            <p style="color: var(--text-light);">Wagered: ${formatMoney(found.lifetimeWagered)}</p>
+            <p style="color: var(--success);">Prize: ${getPrizeForRank(userRank)}</p>
+          </div>
+        `;
+      } else {
+        searchResult.innerHTML = `
+          <div style="margin-top: 20px; padding: 20px; background: rgba(239, 68, 68, 0.1); border-radius: 10px; border: 1px solid rgba(239, 68, 68, 0.2);">
+            <p style="color: #ef4444;">Username not found</p>
+          </div>
+        `;
+      }
+    });
+    
+    // Update refresh note
+    const now = new Date();
+    document.getElementById('refresh-note').textContent = 
+      `Auto-refreshes every 60s • Last updated ${now.toLocaleTimeString()}`;
+    
+  } catch (error) {
+    console.error('Failed to load leaderboard:', error);
+    document.getElementById('hero-cards').innerHTML = '<div class="empty">Failed to load data. Retrying...</div>';
+    document.getElementById('leaderboard-rows').innerHTML = '<div class="empty">Failed to load data. Retrying...</div>';
+  }
+}
+
+// Initialize
+updateCountdown();
+loadLeaderboard();
+
+// Update every minute
+setInterval(updateCountdown, 60000);
+setInterval(loadLeaderboard, 60000);
 </script>
 </body>
 </html>
