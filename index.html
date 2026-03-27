@@ -36,166 +36,37 @@
     z-index: 0;
   }
   
-  .container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 40px 20px;
-    position: relative;
-    z-index: 1;
-  }
+  .container { max-width: 800px; margin: 0 auto; padding: 40px 20px; position: relative; z-index: 1; }
   
-  .header {
-    text-align: center;
-    margin-bottom: 40px;
-  }
+  .header { text-align: center; margin-bottom: 40px; }
   
-  .logo-row {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 16px;
-    margin-bottom: 16px;
-  }
+  .logo-row { display: flex; align-items: center; justify-content: center; gap: 16px; margin-bottom: 16px; }
+  .shuffle-logo { height: 36px; filter: brightness(0) invert(1); }
+  .logo-x { font-size: 18px; font-weight: 900; background: linear-gradient(135deg, var(--orange), var(--purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .orangie-text { font-size: 28px; font-weight: 900; color: var(--orange); letter-spacing: 2px; }
   
-  .shuffle-logo {
-    height: 36px;
-    filter: brightness(0) invert(1);
-  }
+  .title { font-size: 42px; font-weight: 900; background: linear-gradient(135deg, var(--orange) 0%, var(--purple) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 8px; }
+  .subtitle { color: #666; font-size: 14px; font-weight: 500; }
   
-  .logo-x {
-    font-size: 18px;
-    font-weight: 900;
-    background: linear-gradient(135deg, var(--orange), var(--purple));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-  
-  .orangie-text {
-    font-size: 28px;
-    font-weight: 900;
-    color: var(--orange);
-    letter-spacing: 2px;
-  }
-  
-  .title {
-    font-size: 42px;
-    font-weight: 900;
-    background: linear-gradient(135deg, var(--orange) 0%, var(--purple) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-bottom: 8px;
-  }
-  
-  .subtitle {
-    color: #666;
-    font-size: 14px;
-    font-weight: 500;
-  }
-  
-  .prize-pool {
-    background: linear-gradient(135deg, rgba(255, 107, 43, 0.08) 0%, rgba(139, 92, 246, 0.08) 100%);
-    border: 1px solid rgba(255, 107, 43, 0.2);
-    border-radius: 20px;
-    padding: 30px;
-    margin-bottom: 30px;
-    backdrop-filter: blur(10px);
-  }
-  
-  .prize-pool h2 {
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 3px;
-    color: var(--orange);
-    text-transform: uppercase;
-    margin-bottom: 20px;
-    text-align: center;
-  }
-  
-  .prize-grid {
-    display: flex;
-    justify-content: center;
-    gap: 16px;
-    flex-wrap: wrap;
-  }
-  
-  .prize-item {
-    text-align: center;
-    padding: 16px 24px;
-    border-radius: 14px;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    min-width: 100px;
-    transition: transform 0.2s, border-color 0.2s;
-  }
-  
-  .prize-item:hover {
-    transform: translateY(-2px);
-    border-color: rgba(139, 92, 246, 0.4);
-  }
-  
+  .prize-pool { background: linear-gradient(135deg, rgba(255, 107, 43, 0.08) 0%, rgba(139, 92, 246, 0.08) 100%); border: 1px solid rgba(255, 107, 43, 0.2); border-radius: 20px; padding: 30px; margin-bottom: 30px; backdrop-filter: blur(10px); }
+  .prize-pool h2 { font-size: 13px; font-weight: 700; letter-spacing: 3px; color: var(--orange); text-transform: uppercase; margin-bottom: 20px; text-align: center; }
+  .prize-grid { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+  .prize-item { text-align: center; padding: 16px 24px; border-radius: 14px; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.06); min-width: 100px; transition: transform 0.2s, border-color 0.2s; }
+  .prize-item:hover { transform: translateY(-2px); border-color: rgba(139, 92, 246, 0.4); }
   .prize-item.gold { border-color: rgba(255, 215, 0, 0.3); }
   .prize-item.silver { border-color: rgba(192, 192, 192, 0.2); }
   .prize-item.bronze { border-color: rgba(205, 127, 50, 0.2); }
-  
   .prize-rank { font-size: 24px; margin-bottom: 6px; }
   .prize-amount { font-size: 22px; font-weight: 800; color: #fff; }
   .prize-label { font-size: 11px; color: #666; margin-top: 4px; font-weight: 500; }
+  .prize-total { text-align: center; margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.06); }
+  .prize-total span { font-size: 28px; font-weight: 900; background: linear-gradient(135deg, var(--orange), var(--purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .prize-total small { display: block; font-size: 12px; color: #555; margin-top: 4px; }
   
-  .prize-total {
-    text-align: center;
-    margin-top: 20px;
-    padding-top: 20px;
-    border-top: 1px solid rgba(255, 255, 255, 0.06);
-  }
+  .leaderboard { background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(139, 92, 246, 0.15); border-radius: 20px; overflow: hidden; backdrop-filter: blur(10px); }
+  .lb-header { display: grid; grid-template-columns: 60px 1fr 150px; padding: 16px 24px; font-size: 11px; font-weight: 700; letter-spacing: 2px; color: #555; text-transform: uppercase; border-bottom: 1px solid rgba(255, 255, 255, 0.06); }
   
-  .prize-total span {
-    font-size: 28px;
-    font-weight: 900;
-    background: linear-gradient(135deg, var(--orange), var(--purple));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-  
-  .prize-total small {
-    display: block;
-    font-size: 12px;
-    color: #555;
-    margin-top: 4px;
-  }
-  
-  .leaderboard {
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(139, 92, 246, 0.15);
-    border-radius: 20px;
-    overflow: hidden;
-    backdrop-filter: blur(10px);
-  }
-  
-  .lb-header {
-    display: grid;
-    grid-template-columns: 60px 1fr 150px;
-    padding: 16px 24px;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    color: #555;
-    text-transform: uppercase;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-  }
-  
-  .lb-row {
-    display: grid;
-    grid-template-columns: 60px 1fr 150px;
-    padding: 18px 24px;
-    align-items: center;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
-    transition: background 0.2s, transform 0.2s;
-    animation: fadeIn 0.3s ease-out;
-  }
-  
+  .lb-row { display: grid; grid-template-columns: 60px 1fr 150px; padding: 18px 24px; align-items: center; border-bottom: 1px solid rgba(255, 255, 255, 0.03); transition: background 0.2s; animation: fadeIn 0.3s ease-out; }
   .lb-row:hover { background: rgba(139, 92, 246, 0.05); }
   .lb-row:last-child { border-bottom: none; }
   .lb-row.top-1 { background: rgba(255, 215, 0, 0.04); }
@@ -207,104 +78,83 @@
   .top-2 .rank { color: #C0C0C0; font-size: 18px; }
   .top-3 .rank { color: #CD7F32; font-size: 18px; }
   
+  .username-col { display: flex; flex-direction: column; gap: 4px; }
   .username { font-weight: 600; font-size: 15px; color: #ccc; }
   .top-1 .username, .top-2 .username, .top-3 .username { color: #fff; }
   
-  .wagered {
-    font-weight: 700;
-    font-size: 16px;
-    background: linear-gradient(135deg, var(--orange), var(--purple));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    text-align: right;
-  }
-  
-  .join-section {
-    text-align: center;
-    margin-top: 30px;
-  }
-  
-  .join-btn {
-    display: inline-block;
-    padding: 16px 48px;
-    background: linear-gradient(135deg, var(--orange) 0%, var(--purple) 100%);
-    color: #fff;
-    font-weight: 800;
-    font-size: 16px;
-    text-decoration: none;
-    border-radius: 50px;
-    letter-spacing: 1px;
-    transition: transform 0.2s, box-shadow 0.2s;
-    box-shadow: 0 4px 24px var(--orange-glow);
-  }
-  
-  .join-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 32px var(--purple-glow);
-  }
-  
-  .join-sub {
-    color: #555;
-    font-size: 12px;
-    margin-top: 10px;
-  }
-  
-  .join-sub strong {
-    background: linear-gradient(135deg, var(--orange), var(--purple));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-  
-  .refresh-note {
-    text-align: center;
-    color: #333;
+  .tip-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
     font-size: 11px;
-    margin-top: 20px;
+    font-weight: 600;
+    color: var(--orange);
+    cursor: pointer;
+    padding: 2px 8px;
+    border-radius: 20px;
+    background: rgba(255, 107, 43, 0.1);
+    border: 1px solid rgba(255, 107, 43, 0.2);
+    transition: all 0.2s;
+    width: fit-content;
+  }
+  .tip-badge:hover { background: rgba(255, 107, 43, 0.2); border-color: rgba(255, 107, 43, 0.4); }
+  .tip-badge .arrow { transition: transform 0.2s; font-size: 8px; }
+  .tip-badge.open .arrow { transform: rotate(180deg); }
+  
+  .tip-details {
+    display: none;
+    margin-top: 8px;
+    padding: 10px 14px;
+    background: rgba(255, 107, 43, 0.05);
+    border: 1px solid rgba(255, 107, 43, 0.1);
+    border-radius: 10px;
+    grid-column: 1 / -1;
+  }
+  .tip-details.open { display: block; animation: fadeIn 0.2s ease-out; }
+  
+  .tip-details-header {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--orange);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid rgba(255, 107, 43, 0.1);
   }
   
+  .tip-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 0;
+    font-size: 13px;
+  }
+  .tip-line + .tip-line { border-top: 1px solid rgba(255, 255, 255, 0.03); }
+  .tip-amt { font-weight: 700; color: var(--orange); }
+  .tip-date { color: #666; font-size: 11px; }
+  
+  .wagered { font-weight: 700; font-size: 16px; background: linear-gradient(135deg, var(--orange), var(--purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-align: right; }
+  
+  .join-section { text-align: center; margin-top: 30px; }
+  .join-btn { display: inline-block; padding: 16px 48px; background: linear-gradient(135deg, var(--orange) 0%, var(--purple) 100%); color: #fff; font-weight: 800; font-size: 16px; text-decoration: none; border-radius: 50px; letter-spacing: 1px; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 4px 24px var(--orange-glow); }
+  .join-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 32px var(--purple-glow); }
+  .join-sub { color: #555; font-size: 12px; margin-top: 10px; }
+  .join-sub strong { background: linear-gradient(135deg, var(--orange), var(--purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  
+  .refresh-note { text-align: center; color: #333; font-size: 11px; margin-top: 20px; }
   .loading { text-align: center; padding: 60px; color: #555; }
-  
-  .spinner {
-    width: 32px;
-    height: 32px;
-    border: 3px solid rgba(139, 92, 246, 0.2);
-    border-top-color: var(--orange);
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-    margin: 0 auto 16px;
-  }
+  .spinner { width: 32px; height: 32px; border: 3px solid rgba(139, 92, 246, 0.2); border-top-color: var(--orange); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 16px; }
   
   @keyframes spin { to { transform: rotate(360deg); } }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
   
   .empty { text-align: center; padding: 40px; color: #555; }
   
-  .powered-by {
-    text-align: center;
-    margin-top: 30px;
-    padding-top: 20px;
-    border-top: 1px solid rgba(255, 255, 255, 0.04);
-  }
-  
-  .powered-by img {
-    height: 24px;
-    filter: brightness(0) invert(1);
-    opacity: 0.4;
-    transition: opacity 0.2s;
-  }
-  
+  .powered-by { text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.04); }
+  .powered-by img { height: 24px; filter: brightness(0) invert(1); opacity: 0.4; transition: opacity 0.2s; }
   .powered-by img:hover { opacity: 0.7; }
-  
-  .powered-by span {
-    display: block;
-    font-size: 10px;
-    color: #333;
-    margin-bottom: 8px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-  }
+  .powered-by span { display: block; font-size: 10px; color: #333; margin-bottom: 8px; letter-spacing: 2px; text-transform: uppercase; }
   
   @media (max-width: 600px) {
     .title { font-size: 28px; }
@@ -392,8 +242,86 @@ const API = 'https://affiliate.shuffle.com/stats/949cf925-a4e8-47c6-a7cb-3e2d993
 const rowsEl = document.getElementById('rows');
 const noteEl = document.getElementById('refresh-note');
 
+// Tip data from Orangie — keyed by lowercase username variants
+const TIPS = {
+  slackzquant: [
+    { amount: 227, date: "Mar 26, 2026 12:43 AM" },
+    { amount: 150, date: "Jan 23, 2026 12:29 AM" },
+    { amount: 100, date: "Jan 23, 2026 12:17 AM" },
+    { amount: 1000, date: "Feb 2, 2026 8:45 PM" },
+    { amount: 321, date: "Feb 11, 2026 10:08 PM" },
+    { amount: 150, date: "Mar 10, 2026 1:54 AM" }
+  ],
+  mninvestz: [
+    { amount: 50, date: "Mar 26, 2026 12:43 AM" },
+    { amount: 300, date: "Mar 14, 2026 10:09 PM" },
+    { amount: 50, date: "Feb 16, 2026 11:13 PM" }
+  ],
+  defaulttyorangie: [
+    { amount: 100, date: "Mar 26, 2026 12:43 AM" },
+    { amount: 200, date: "Mar 10, 2026 1:55 AM" },
+    { amount: 50, date: "Feb 16, 2026 11:13 PM" }
+  ],
+  skogs21: [
+    { amount: 150, date: "Mar 26, 2026 12:44 AM" }
+  ],
+  yoyo7: [
+    { amount: 50, date: "Mar 26, 2026 12:44 AM" }
+  ],
+  retrorelaxo: [
+    { amount: 50, date: "Mar 10, 2026 1:56 AM" }
+  ],
+  sammyk21: [
+    { amount: 100, date: "Mar 10, 2026 1:56 AM" }
+  ],
+  yevon666: [
+    { amount: 100, date: "Mar 10, 2026 1:55 AM" },
+    { amount: 346, date: "Jan 23, 2026 12:16 AM" }
+  ],
+  frostyjays: [
+    { amount: 174, date: "Mar 10, 2026 1:54 AM" }
+  ],
+  realnotzeez: [
+    { amount: 32, date: "Feb 16, 2026 11:52 PM" }
+  ],
+  caydenx00: [
+    { amount: 337, date: "Feb 16, 2026 11:12 PM" }
+  ],
+  "zuni0x": [
+    { amount: 75, date: "Jan 23, 2026 12:55 AM" }
+  ],
+  mntrenches: [
+    { amount: 35, date: "Jan 23, 2026 12:54 AM" }
+  ]
+};
+
+// Map affiliate usernames to tip usernames (lowercase)
+const USERNAME_MAP = {
+  slackzquant: "slackzquant",
+  mninvestz: "mninvestz",
+  retrorelaxo: "retrorelaxo",
+  sammyk21: "sammyk21",
+  "zuni0x": "zuni0x"
+};
+
+function getTips(username) {
+  const lower = username.toLowerCase();
+  return TIPS[lower] || TIPS[USERNAME_MAP[lower]] || null;
+}
+
 function fmt(n) {
   return '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+
+function fmtTip(n) {
+  return '$' + n.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+}
+
+function toggleTip(el) {
+  const badge = el;
+  const details = badge.parentElement.querySelector('.tip-details');
+  badge.classList.toggle('open');
+  details.classList.toggle('open');
 }
 
 async function load() {
@@ -414,9 +342,29 @@ async function load() {
       const rank = i + 1;
       const cls = rank <= 3 ? ` top-${rank}` : '';
       const medal = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : `#${rank}`;
+      const tips = getTips(u.username);
+      const tipTotal = tips ? tips.reduce((s, t) => s + t.amount, 0) : 0;
+      
+      let tipHtml = '';
+      if (tips) {
+        const detailLines = tips
+          .sort((a, b) => new Date(b.date) - new Date(a.date))
+          .map(t => `<div class="tip-line"><span class="tip-amt">${fmtTip(t.amount)}</span><span class="tip-date">${t.date}</span></div>`)
+          .join('');
+        tipHtml = `
+          <div class="tip-badge" onclick="toggleTip(this)">🍊 Tipped ${fmtTip(tipTotal)} by Orangie <span class="arrow">▼</span></div>
+          <div class="tip-details">
+            <div class="tip-details-header">🍊 Tip History from Orangie</div>
+            ${detailLines}
+          </div>`;
+      }
+      
       return `<div class="lb-row${cls}" style="animation-delay:${i * 0.03}s">
         <div class="rank">${medal}</div>
-        <div class="username">${u.username || '???'}</div>
+        <div class="username-col">
+          <div class="username">${u.username || '???'}</div>
+          ${tipHtml}
+        </div>
         <div class="wagered">${fmt(u.lifetimeWagered)}</div>
       </div>`;
     }).join('');
