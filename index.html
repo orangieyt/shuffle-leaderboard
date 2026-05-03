@@ -713,6 +713,7 @@
 <script>
 // Use local cached data (updated every 5 min by GitHub Actions) to avoid CORS/ad-blocker issues
 const API = './data.json';
+const BASELINE = './baseline.json';
 
 // Tip data from Orangie — keyed by lowercase username variants
 const TIPS = {
@@ -830,19 +831,32 @@ async function loadLeaderboard() {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 10000);
     
-    const response = await fetch(API, { 
-      signal: controller.signal,
-      headers: { 'Accept': 'application/json' }
-    });
+    const [dataRes, baseRes] = await Promise.all([
+      fetch(API, { signal: controller.signal, headers: { 'Accept': 'application/json' } }),
+      fetch(BASELINE, { signal: controller.signal, headers: { 'Accept': 'application/json' } }).catch(() => null)
+    ]);
     clearTimeout(timeoutId);
     
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    const data = await response.json();
+    if (!dataRes.ok) throw new Error(`HTTP ${dataRes.status}`);
+    const data = await dataRes.json();
+    
+    let baseline = {};
+    if (baseRes && baseRes.ok) {
+      const baseData = await baseRes.json();
+      baseData.forEach(u => { baseline[u.username.toLowerCase()] = u.lifetimeWagered; });
+    }
+    
+    // Compute monthly wagered
+    data.forEach(user => {
+      const base = baseline[user.username.toLowerCase()] || 0;
+      user.monthlyWagered = Math.max(0, user.lifetimeWagered - base);
+    });
+    
     retryCount = 0;
     
     const active = data
-      .filter(user => user.lifetimeWagered > 0)
-      .sort((a, b) => b.lifetimeWagered - a.lifetimeWagered);
+      .filter(user => user.monthlyWagered > 0)
+      .sort((a, b) => b.monthlyWagered - a.monthlyWagered);
     
     if (!active.length) {
       document.getElementById('hero-cards').innerHTML = '<div class="empty">No active players yet. Be the first!</div>';
@@ -861,7 +875,7 @@ async function loadLeaderboard() {
           <span class="crown">${crown}</span>
           <div class="hero-rank">${rank === 1 ? '1st' : rank === 2 ? '2nd' : '3rd'} Place</div>
           <div class="hero-username">${maskUsername(user.username || '???')}</div>
-          <div class="hero-wagered">${formatMoney(user.lifetimeWagered)} wagered</div>
+          <div class="hero-wagered">${formatMoney(user.monthlyWagered)} wagered</div>
           <div class="hero-prize">${getPrizeForRank(rank)}</div>
         </div>
       `;
@@ -908,7 +922,7 @@ async function loadLeaderboard() {
             <div class="player-name">${maskUsername(user.username || '???')}</div>
             ${tipHtml}
           </div>
-          <div class="wagered-amount">${formatMoney(user.lifetimeWagered)}</div>
+          <div class="wagered-amount">${formatMoney(user.monthlyWagered)}</div>
           <div class="prize-cell">${getPrizeForRank(rank)}</div>
         </div>
       `;
@@ -937,7 +951,7 @@ async function loadLeaderboard() {
           <div style="margin-top: 20px; padding: 20px; background: rgba(255, 255, 255, 0.03); border-radius: 10px; border: 1px solid var(--border);">
             <h3 style="color: var(--orange); margin-bottom: 10px;">Found: ${maskUsername(found.username)}</h3>
             <p style="color: var(--text-light);">Rank: #${userRank}</p>
-            <p style="color: var(--text-light);">Wagered: ${formatMoney(found.lifetimeWagered)}</p>
+            <p style="color: var(--text-light);">Wagered: ${formatMoney(found.monthlyWagered)}</p>
             <p style="color: var(--success);">Prize: ${getPrizeForRank(userRank)}</p>
           </div>
         `;
