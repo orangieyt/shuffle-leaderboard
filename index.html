@@ -3,719 +3,907 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ORANGIE x SHUFFLE Leaderboard</title>
-<meta name="description" content="Wager to win — top players take home prizes monthly. $1,000 prize pool. Use code ORANGIE on Shuffle.com">
-<meta property="og:title" content="ORANGIE x SHUFFLE Leaderboard">
-<meta property="og:description" content="Wager to win — $1,000 monthly prize pool 🏆 Use code ORANGIE">
+<title>ORANGIE × SHUFFLE — Wager Race</title>
+<meta name="description" content="Monthly $1,000 wager race on Shuffle.com. Use code ORANGIE.">
+<meta property="og:title" content="ORANGIE × SHUFFLE — Wager Race">
+<meta property="og:description" content="Climb the leaderboard. Take home cash. $1,000 monthly pool. Code: ORANGIE">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://orangieshuffle.com">
 <meta property="og:image" content="https://orangieshuffle.com/og-image.png">
-<meta property="og:site_name" content="Orangie x Shuffle">
+<meta property="og:site_name" content="Orangie × Shuffle">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="ORANGIE x SHUFFLE Leaderboard">
-<meta name="twitter:description" content="Wager to win — $1,000 monthly prize pool 🏆 Use code ORANGIE">
+<meta name="twitter:title" content="ORANGIE × SHUFFLE — Wager Race">
+<meta name="twitter:description" content="Climb the leaderboard. Take home cash. $1,000 monthly pool. Code: ORANGIE">
 <meta name="twitter:image" content="https://orangieshuffle.com/og-image.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
-  
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
   :root {
-    --orange: #FF6B2B;
-    --purple: #8B5CF6;
-    --bg: #0a0a0f;
-    --card-bg: rgba(255, 255, 255, 0.03);
-    --card-border: rgba(255, 255, 255, 0.06);
-    --text-light: #ffffff;
-    --text-gray: #999;
-    --text-dark: #555;
-    --border: rgba(255, 255, 255, 0.06);
-    --success: #22c55e;
-    --orange-glow: rgba(255, 107, 43, 0.3);
-    --purple-glow: rgba(139, 92, 246, 0.3);
+    --bg: #07070b;
+    --surface: #0f0f15;
+    --surface-2: #16161e;
+    --border: rgba(255, 255, 255, 0.07);
+    --border-strong: rgba(255, 255, 255, 0.14);
+    --text: #f5f5f7;
+    --text-dim: #a0a0ab;
+    --text-muted: #5a5a66;
+    --orange: #C6FF3D;
+    --orange-deep: #9BCC22;
+    --orange-soft: rgba(198, 255, 61, 0.14);
+    --purple: #FF3DAA;
+    --gold: #FFD46B;
+    --silver: #C9C9D1;
+    --bronze: #CD7F32;
+    --green: #00E5FF;
+    --red: #ef4444;
+    --display: 'Space Grotesk', system-ui, sans-serif;
+    --body: 'Inter', system-ui, sans-serif;
+    --mono: 'JetBrains Mono', ui-monospace, monospace;
   }
-  
+
+  html { scroll-behavior: smooth; }
+
   body {
-    font-family: 'Inter', sans-serif;
+    font-family: var(--body);
     background: var(--bg);
-    color: var(--text-light);
+    color: var(--text);
     min-height: 100vh;
     line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
   }
-  
-  body::before {
-    content: '';
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: 
-      radial-gradient(ellipse at 20% 50%, rgba(255, 107, 43, 0.08) 0%, transparent 50%),
-      radial-gradient(ellipse at 80% 20%, rgba(139, 92, 246, 0.08) 0%, transparent 50%),
-      radial-gradient(ellipse at 50% 80%, rgba(255, 107, 43, 0.04) 0%, transparent 50%);
-    pointer-events: none;
-    z-index: 0;
+
+  /* Ambient background */
+  .ambient {
+    position: fixed; inset: 0;
+    pointer-events: none; z-index: 0;
+    background:
+      radial-gradient(circle at var(--mx, 30%) var(--my, 20%), rgba(198, 255, 61, 0.08), transparent 40%),
+      radial-gradient(circle at 80% 80%, rgba(255, 61, 170, 0.06), transparent 50%);
+    transition: background 0.4s ease;
   }
-  
-  .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
+  .grid-bg {
+    position: fixed; inset: 0;
+    pointer-events: none; z-index: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
   }
-  
-  .container, .header .container, .top-three .container, .leaderboard-section .container,
-  .find-ranking .container, .kick-section .container, .footer .container {
-    position: relative;
-    z-index: 1;
+
+  .container { max-width: 1180px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 2; }
+
+  /* Scroll progress */
+  .scroll-progress {
+    position: fixed; top: 0; left: 0; height: 2px; width: 0%;
+    background: linear-gradient(90deg, var(--orange), var(--purple));
+    z-index: 100; transition: width 0.1s linear;
   }
-  
-  /* Header */
-  .header {
-    background: transparent;
-    padding: 40px 0;
-    text-align: center;
+
+  /* Nav */
+  .nav {
+    position: sticky; top: 0; z-index: 50;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    background: rgba(7, 7, 11, 0.72);
     border-bottom: 1px solid var(--border);
   }
-  
-  .logo-row { display: flex; align-items: center; justify-content: center; gap: 16px; margin-bottom: 20px; }
-  .shuffle-logo { height: 36px; filter: brightness(0) invert(1); }
-  .logo-x { font-size: 18px; font-weight: 900; background: linear-gradient(135deg, var(--orange), var(--purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-  .orangie-text { font-size: 28px; font-weight: 900; color: var(--orange); letter-spacing: 2px; }
-  
-  .countdown-timer {
-    background: linear-gradient(135deg, rgba(255, 107, 43, 0.08) 0%, rgba(139, 92, 246, 0.08) 100%);
-    border: 1px solid rgba(255, 107, 43, 0.2);
-    border-radius: 12px;
-    padding: 20px;
-    margin-bottom: 30px;
-    display: inline-block;
+  .nav-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 0; gap: 24px;
   }
-  
-  .countdown-label {
-    font-size: 12px;
-    font-weight: 700;
-    color: var(--orange);
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    margin-bottom: 10px;
+  .brand {
+    display: flex; align-items: center; gap: 10px;
+    font-family: var(--display); font-weight: 700; font-size: 15px;
+    letter-spacing: 0.02em;
   }
-  
-  .countdown-display {
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .countdown-unit {
-    text-align: center;
-  }
-  
-  .countdown-number {
-    font-size: 24px;
-    font-weight: 900;
-    color: var(--text-light);
-    display: block;
-  }
-  
-  .countdown-text {
-    font-size: 11px;
-    color: var(--text-gray);
-    text-transform: uppercase;
-    font-weight: 600;
-  }
-  
-  .main-title {
-    font-size: 48px;
-    font-weight: 900;
-    background: linear-gradient(135deg, var(--orange) 0%, var(--purple) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-bottom: 10px;
-  }
-  
-  .prize-amount {
-    font-size: 32px;
-    font-weight: 800;
+  .brand-mark {
+    width: 24px; height: 24px; border-radius: 6px;
     background: linear-gradient(135deg, var(--orange), var(--purple));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-bottom: 20px;
+    display: grid; place-items: center;
+    font-size: 13px; font-weight: 800; color: #0b0b10;
   }
-  
-  .header-buttons {
-    display: flex;
-    gap: 15px;
-    justify-content: center;
-    flex-wrap: wrap;
+  .brand .x { color: var(--text-muted); font-weight: 400; }
+  .brand .partner { color: var(--text-dim); font-weight: 500; }
+
+  .nav-links {
+    display: flex; gap: 4px; align-items: center;
   }
-  
+  .nav-link {
+    padding: 8px 14px; border-radius: 8px;
+    color: var(--text-dim); text-decoration: none;
+    font-size: 13px; font-weight: 500;
+    transition: color 0.15s ease, background 0.15s ease;
+  }
+  .nav-link:hover { color: var(--text); background: rgba(255,255,255,0.04); }
+  .nav-link.active { color: var(--text); background: rgba(255,255,255,0.06); }
+
+  .nav-cta {
+    display: flex; gap: 10px; align-items: center;
+  }
+  .live-pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 6px 11px; border-radius: 999px;
+    background: rgba(0, 229, 255, 0.1);
+    border: 1px solid rgba(0, 229, 255, 0.3);
+    font-size: 11px; font-weight: 600;
+    color: var(--green); letter-spacing: 0.06em;
+  }
+  .live-pill .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 8px var(--green);
+    animation: pulse 1.6s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.85); }
+  }
+
+  /* Buttons */
   .btn {
-    padding: 12px 30px;
-    border-radius: 25px;
-    font-weight: 700;
-    text-decoration: none;
-    font-size: 14px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    transition: all 0.3s ease;
-    border: 2px solid transparent;
-    display: inline-block;
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 11px 18px; border-radius: 10px;
+    font-family: var(--body); font-weight: 600; font-size: 13px;
+    text-decoration: none; cursor: pointer; border: 1px solid transparent;
+    transition: transform 0.12s ease, background 0.15s ease, border-color 0.15s ease;
+    letter-spacing: 0.01em;
   }
-  
-  .btn-orange {
-    background: var(--orange);
-    color: white;
+  .btn-primary {
+    background: var(--orange); color: #0b0b10;
   }
-  
-  .btn-orange:hover {
-    background: #e85a1f;
-    box-shadow: 0 5px 15px rgba(255, 107, 43, 0.4);
+  .btn-primary:hover { background: #D8FF66; transform: translateY(-1px); }
+  .btn-ghost {
+    background: transparent; color: var(--text);
+    border-color: var(--border-strong);
   }
-  
-  .btn-outline {
-    background: transparent;
-    color: var(--orange);
-    border-color: rgba(255, 107, 43, 0.5);
-  }
-  
-  .btn-outline:hover {
-    background: var(--orange);
-    color: white;
-  }
-  
-  /* Hero Top 3 */
-  .top-three {
-    padding: 60px 0;
-    background: rgba(255, 255, 255, 0.01);
-  }
-  
-  .section-title {
-    text-align: center;
-    font-size: 28px;
-    font-weight: 800;
-    color: var(--text-light);
-    margin-bottom: 40px;
-  }
-  
-  .hero-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
-    max-width: 1000px;
-    margin: 0 auto;
-  }
-  
-  .hero-card {
-    background: var(--card-bg);
-    border: 1px solid var(--card-border);
-    border-radius: 20px;
-    padding: 30px;
-    text-align: center;
-    position: relative;
-    transition: transform 0.3s ease;
-  }
-  
-  .hero-card:hover {
-    transform: translateY(-5px);
-  }
-  
-  .hero-card.first {
-    border-color: #FFD700;
-    box-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
-  }
-  
-  .hero-card.second {
-    border-color: #C0C0C0;
-    box-shadow: 0 0 30px rgba(192, 192, 192, 0.2);
-  }
-  
-  .hero-card.third {
-    border-color: #CD7F32;
-    box-shadow: 0 0 30px rgba(205, 127, 50, 0.2);
-  }
-  
-  .crown {
-    font-size: 40px;
-    margin-bottom: 15px;
-    display: block;
-  }
-  
-  .hero-rank {
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--text-gray);
-    margin-bottom: 10px;
-  }
-  
-  .hero-username {
-    font-size: 24px;
-    font-weight: 800;
-    color: var(--text-light);
-    margin-bottom: 15px;
-  }
-  
-  .hero-wagered {
-    font-size: 20px;
-    font-weight: 700;
-    color: var(--orange);
-    margin-bottom: 15px;
-  }
-  
-  .hero-prize {
-    font-size: 28px;
-    font-weight: 900;
-    background: linear-gradient(135deg, var(--orange), var(--purple));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    padding: 10px 20px;
-    border-radius: 10px;
-    display: inline-block;
-  }
-  
-  /* Leaderboard Table */
-  .leaderboard-section {
-    background: rgba(255, 255, 255, 0.01);
-    padding: 60px 0;
-  }
-  
-  .leaderboard-table {
-    background: var(--card-bg);
-    border: 1px solid var(--border);
-    border-radius: 15px;
-    overflow: hidden;
-    max-width: 900px;
-    margin: 0 auto;
-  }
-  
-  .table-header {
-    background: rgba(139, 92, 246, 0.08);
-    padding: 20px 30px;
-    display: grid;
-    grid-template-columns: 80px 1fr 150px 120px;
-    gap: 20px;
-    font-weight: 700;
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: var(--text-gray);
-  }
-  
-  .table-row {
-    padding: 20px 30px;
-    display: grid;
-    grid-template-columns: 80px 1fr 150px 120px;
-    gap: 20px;
-    align-items: center;
-    border-bottom: 1px solid var(--border);
-    transition: background 0.3s ease;
-  }
-  
-  .table-row:hover {
-    background: rgba(255, 107, 43, 0.05);
-  }
-  
-  .table-row:last-child {
-    border-bottom: none;
-  }
-  
-  .rank-number {
-    font-size: 16px;
-    font-weight: 800;
-    color: var(--text-gray);
-  }
-  
-  .player-info {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-  }
-  
-  .player-name {
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--text-light);
-  }
-  
-  .tip-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--orange);
-    cursor: pointer;
-    padding: 4px 10px;
-    border-radius: 12px;
-    background: rgba(255, 107, 43, 0.1);
-    border: 1px solid rgba(255, 107, 43, 0.2);
-    transition: all 0.2s;
-    width: fit-content;
-  }
-  
-  .tip-badge:hover {
-    background: rgba(255, 107, 43, 0.2);
-    border-color: rgba(255, 107, 43, 0.4);
-  }
-  
-  .tip-details {
-    display: none;
-    margin-top: 10px;
-    padding: 15px;
-    background: rgba(255, 107, 43, 0.05);
-    border: 1px solid rgba(255, 107, 43, 0.1);
-    border-radius: 10px;
-    grid-column: 1 / -1;
-  }
-  
-  .tip-details.open {
-    display: block;
-  }
-  
-  .tip-details-header {
-    font-size: 12px;
-    font-weight: 700;
-    color: var(--orange);
-    margin-bottom: 10px;
-    text-transform: uppercase;
-  }
-  
-  .tip-line {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 8px 0;
-    font-size: 14px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  }
-  
-  .tip-line:last-child {
-    border-bottom: none;
-  }
-  
-  .tip-amt {
-    font-weight: 700;
-    color: var(--orange);
-  }
-  
-  .tip-date {
-    color: var(--text-gray);
-    font-size: 12px;
-  }
-  
-  .wagered-amount {
-    font-size: 16px;
-    font-weight: 700;
-    background: linear-gradient(135deg, var(--orange), var(--purple));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    text-align: right;
-  }
-  
-  .prize-cell {
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--orange);
-    text-align: right;
-  }
-  
-  /* Find Your Ranking */
-  .find-ranking {
-    background: transparent;
-    padding: 60px 0;
-    text-align: center;
-  }
-  
-  .search-box {
-    max-width: 400px;
-    margin: 20px auto;
+  .btn-ghost:hover { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.22); }
+  .btn-sm { padding: 8px 13px; font-size: 12px; }
+
+  /* Hero */
+  .hero {
+    padding: 72px 0 56px;
     position: relative;
   }
-  
-  .search-input {
-    width: 100%;
-    padding: 15px 20px;
-    background: rgba(255, 255, 255, 0.03);
-    border: 2px solid var(--border);
-    border-radius: 25px;
-    color: var(--text-light);
-    font-size: 16px;
-    outline: none;
-    transition: border-color 0.3s ease;
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 56px;
+    align-items: end;
   }
-  
-  .search-input:focus {
-    border-color: var(--orange);
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--mono);
+    font-size: 11px; font-weight: 500;
+    color: var(--orange);
+    text-transform: uppercase; letter-spacing: 0.18em;
+    margin-bottom: 20px;
   }
-  
-  .search-input::placeholder {
-    color: var(--text-gray);
+  .eyebrow::before {
+    content: ''; width: 22px; height: 1px; background: var(--orange);
   }
-  
-  /* Kick Stream */
-  .kick-section {
-    background: rgba(255, 255, 255, 0.01);
-    padding: 60px 0;
-    text-align: center;
+  .hero h1 {
+    font-family: var(--display);
+    font-size: clamp(42px, 6vw, 72px);
+    font-weight: 700;
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    margin-bottom: 22px;
   }
-  
-  .kick-embed {
-    max-width: 800px;
-    margin: 20px auto;
-    border-radius: 15px;
-    overflow: hidden;
-    background: var(--card-bg);
+  .hero h1 .accent {
+    background: linear-gradient(120deg, var(--orange) 0%, #66E5C7 60%, var(--purple) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .hero-sub {
+    font-size: 16px; color: var(--text-dim);
+    max-width: 520px; margin-bottom: 32px;
+    line-height: 1.6;
+  }
+  .hero-cta-row { display: flex; gap: 12px; flex-wrap: wrap; }
+
+  /* Countdown card */
+  .countdown-card {
+    background: linear-gradient(180deg, var(--surface) 0%, rgba(15,15,21,0.4) 100%);
     border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
   }
-  
-  .kick-placeholder {
-    padding: 100px;
-    color: var(--text-gray);
-    font-size: 18px;
-    background: var(--card-bg);
+  .countdown-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--orange), transparent);
+    opacity: 0.5;
   }
-  
-  /* Footer */
-  .footer {
-    background: transparent;
-    padding: 40px 0;
+  .countdown-head {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: 16px;
+  }
+  .countdown-title {
+    font-family: var(--mono);
+    font-size: 11px; color: var(--text-muted);
+    text-transform: uppercase; letter-spacing: 0.16em;
+  }
+  .countdown-month {
+    font-family: var(--display); font-weight: 600;
+    font-size: 13px; color: var(--text-dim);
+  }
+  .countdown-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+  }
+  .cd-unit {
+    background: rgba(0,0,0,0.4);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 8px;
     text-align: center;
+  }
+  .cd-num {
+    font-family: var(--mono); font-weight: 700;
+    font-size: 28px; color: var(--text);
+    display: block; line-height: 1; letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+  }
+  .cd-lbl {
+    font-size: 10px; color: var(--text-muted);
+    margin-top: 6px; text-transform: uppercase; letter-spacing: 0.1em;
+    display: block;
+  }
+  .prize-strip {
+    margin-top: 18px; padding-top: 16px;
     border-top: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: baseline;
   }
-  
-  .footer-code {
-    font-size: 24px;
-    font-weight: 900;
+  .prize-label {
+    font-family: var(--mono); font-size: 10px; color: var(--text-muted);
+    letter-spacing: 0.16em; text-transform: uppercase;
+  }
+  .prize-amount {
+    font-family: var(--display); font-weight: 700;
+    font-size: 32px; letter-spacing: -0.02em;
+    background: linear-gradient(120deg, var(--orange), var(--purple));
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Section */
+  section { padding: 72px 0; position: relative; }
+  .section-head {
+    display: flex; align-items: end; justify-content: space-between;
+    margin-bottom: 36px; gap: 20px; flex-wrap: wrap;
+  }
+  .section-head h2 {
+    font-family: var(--display); font-weight: 700;
+    font-size: clamp(28px, 3.4vw, 38px); letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+  .section-head p {
+    color: var(--text-dim); font-size: 14px; margin-top: 6px;
+  }
+
+  /* Podium */
+  .podium {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr 1fr;
+    gap: 16px;
+    align-items: end;
+    max-width: 920px; margin: 0 auto;
+  }
+  .podium-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px 20px 24px;
+    text-align: center;
+    position: relative;
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s;
+  }
+  .podium-card:hover { transform: translateY(-4px); }
+  .podium-card.rank-1 {
+    border-color: rgba(255, 212, 107, 0.35);
+    background: linear-gradient(180deg, rgba(255,212,107,0.06), var(--surface) 60%);
+    padding-top: 40px; padding-bottom: 32px;
+    box-shadow: 0 24px 60px -20px rgba(255, 212, 107, 0.18);
+  }
+  .podium-card.rank-2 {
+    border-color: rgba(201, 201, 209, 0.25);
+  }
+  .podium-card.rank-3 {
+    border-color: rgba(205, 127, 50, 0.3);
+  }
+  .medal {
+    position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+    width: 32px; height: 32px; border-radius: 50%;
+    display: grid; place-items: center;
+    font-family: var(--mono); font-weight: 700; font-size: 13px;
+    color: #0b0b10;
+    border: 3px solid var(--bg);
+  }
+  .rank-1 .medal { background: var(--gold); }
+  .rank-2 .medal { background: var(--silver); }
+  .rank-3 .medal { background: var(--bronze); color: white; }
+  .podium-place {
+    font-family: var(--mono); font-size: 10px;
+    color: var(--text-muted); letter-spacing: 0.16em;
+    text-transform: uppercase; margin-bottom: 10px;
+  }
+  .podium-name {
+    font-family: var(--display); font-weight: 700;
+    font-size: 22px; letter-spacing: -0.01em;
+    margin-bottom: 14px; word-break: break-word;
+  }
+  .podium-wager {
+    font-family: var(--mono); font-weight: 700;
+    font-size: 24px; color: var(--text);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
+  }
+  .podium-wager-lbl {
+    font-size: 11px; color: var(--text-muted);
+    margin-top: 4px; text-transform: uppercase; letter-spacing: 0.12em;
+  }
+  .podium-prize {
+    margin-top: 18px;
+    padding: 8px 14px;
+    background: rgba(198, 255, 61, 0.08);
+    border: 1px solid rgba(198, 255, 61, 0.2);
+    border-radius: 999px;
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: var(--mono); font-weight: 700; font-size: 13px;
     color: var(--orange);
-    margin-bottom: 20px;
   }
-  
-  .social-links {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    flex-wrap: wrap;
-    margin-bottom: 20px;
+  .rank-1 .podium-prize {
+    background: rgba(255, 212, 107, 0.1);
+    border-color: rgba(255, 212, 107, 0.3);
+    color: var(--gold);
   }
-  
-  .social-link {
-    color: var(--text-gray);
-    text-decoration: none;
-    font-weight: 600;
-    transition: color 0.3s ease;
+
+  /* Leaderboard */
+  .lb-controls {
+    display: flex; gap: 16px; align-items: center; justify-content: space-between;
+    margin-bottom: 20px; flex-wrap: wrap;
   }
-  
-  .social-link:hover {
+  .filter-row { display: flex; gap: 6px; }
+  .filter-pill {
+    padding: 7px 14px; border-radius: 999px;
+    background: transparent; border: 1px solid var(--border);
+    color: var(--text-dim); font-size: 12px; font-weight: 500;
+    cursor: pointer; transition: all 0.15s;
+    font-family: var(--body);
+  }
+  .filter-pill:hover { color: var(--text); border-color: var(--border-strong); }
+  .filter-pill.active {
+    background: var(--text); color: var(--bg);
+    border-color: var(--text);
+  }
+
+  .search-wrap {
+    position: relative; min-width: 260px;
+  }
+  .search-input {
+    width: 100%; padding: 10px 14px 10px 36px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--text); font-size: 13px; font-family: var(--body);
+    outline: none; transition: border-color 0.15s;
+  }
+  .search-input:focus { border-color: var(--orange); }
+  .search-input::placeholder { color: var(--text-muted); }
+  .search-icon {
+    position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
+    color: var(--text-muted); width: 14px; height: 14px;
+  }
+
+  /* Table */
+  .lb-table {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  .lb-row {
+    display: grid;
+    grid-template-columns: 56px 1fr 1.2fr 110px 90px;
+    gap: 16px;
+    align-items: center;
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.15s ease;
+  }
+  .lb-row:last-child { border-bottom: none; }
+  .lb-row.head {
+    font-family: var(--mono); font-size: 10px;
+    color: var(--text-muted);
+    text-transform: uppercase; letter-spacing: 0.14em;
+    background: rgba(255,255,255,0.015);
+    padding-top: 14px; padding-bottom: 14px;
+  }
+  .lb-row.player:hover { background: rgba(198, 255, 61, 0.04); }
+  .lb-row.player.highlight {
+    background: linear-gradient(90deg, rgba(198,255,61,0.1), transparent);
+    border-left: 2px solid var(--orange);
+    padding-left: 22px;
+  }
+  .lb-rank {
+    font-family: var(--mono); font-weight: 700;
+    font-size: 14px; color: var(--text-dim);
+    font-variant-numeric: tabular-nums;
+  }
+  .lb-rank.top { color: var(--orange); }
+  .lb-player-cell {
+    display: flex; flex-direction: column; gap: 6px; min-width: 0;
+  }
+  .lb-name {
+    font-weight: 600; font-size: 14px;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .lb-tip {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 3px 9px; border-radius: 999px;
+    background: rgba(198,255,61,0.08);
+    border: 1px solid rgba(198,255,61,0.18);
+    font-size: 10px; font-weight: 600;
     color: var(--orange);
+    cursor: pointer; user-select: none;
+    width: fit-content;
+    font-family: var(--mono); letter-spacing: 0.04em;
+    transition: background 0.15s;
   }
-  
-  .loading {
+  .lb-tip:hover { background: rgba(198,255,61,0.16); }
+  .tip-arrow { transition: transform 0.2s; }
+  .tip-open .tip-arrow { transform: rotate(180deg); }
+
+  .tip-drawer {
+    grid-column: 1 / -1;
+    margin-top: 12px;
+    padding: 14px 16px;
+    background: rgba(198,255,61,0.04);
+    border: 1px solid rgba(198,255,61,0.12);
+    border-radius: 10px;
+    display: none;
+  }
+  .tip-drawer.open { display: block; animation: drawer-in 0.25s ease; }
+  @keyframes drawer-in {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .tip-drawer-head {
+    font-family: var(--mono); font-size: 10px;
+    color: var(--orange); text-transform: uppercase;
+    letter-spacing: 0.14em; margin-bottom: 10px;
+  }
+  .tip-line {
+    display: flex; justify-content: space-between;
+    padding: 6px 0; font-size: 13px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  .tip-line:last-child { border-bottom: none; }
+  .tip-amt { font-family: var(--mono); font-weight: 700; color: var(--orange); }
+  .tip-date { color: var(--text-muted); font-size: 11px; font-family: var(--mono); }
+
+  .lb-bar-cell {
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .lb-bar-amt {
+    font-family: var(--mono); font-weight: 700;
+    font-size: 13px; color: var(--text);
+    font-variant-numeric: tabular-nums;
+  }
+  .lb-bar {
+    height: 4px; border-radius: 2px;
+    background: rgba(255,255,255,0.06);
+    overflow: hidden;
+  }
+  .lb-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--orange), #66E5C7);
+    border-radius: 2px;
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .lb-prize {
+    font-family: var(--mono); font-weight: 700;
+    font-size: 13px; color: var(--orange);
+    font-variant-numeric: tabular-nums;
+  }
+  .lb-prize.none { color: var(--text-muted); font-weight: 500; }
+
+  .lb-empty {
+    padding: 64px 24px; text-align: center;
+    color: var(--text-muted); font-size: 14px;
+  }
+  .lb-skeleton {
+    height: 56px; padding: 16px 24px;
+    border-bottom: 1px solid var(--border);
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.025), transparent);
+    background-size: 200% 100%;
+    animation: shimmer 1.4s ease-in-out infinite;
+  }
+  @keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
+  /* Stream */
+  .stream-frame {
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    overflow: hidden;
+    background: var(--surface);
+    aspect-ratio: 16/9;
+    position: relative;
+  }
+  .stream-frame iframe {
+    width: 100%; height: 100%; border: 0; display: block;
+  }
+  .stream-meta {
+    display: flex; gap: 14px; align-items: center;
+    margin-top: 16px; flex-wrap: wrap;
+  }
+  .stream-channel {
+    font-family: var(--display); font-weight: 600;
+    font-size: 16px;
+  }
+  .stream-channel-handle { color: var(--text-dim); font-weight: 400; font-size: 14px; margin-left: 6px; font-family: var(--mono); }
+
+  /* Rules grid */
+  .rules-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px;
+  }
+  .rule-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px;
+  }
+  .rule-num {
+    font-family: var(--mono); font-size: 11px;
+    color: var(--orange); letter-spacing: 0.16em;
+    margin-bottom: 10px;
+  }
+  .rule-title {
+    font-family: var(--display); font-weight: 600;
+    font-size: 17px; margin-bottom: 8px; letter-spacing: -0.01em;
+  }
+  .rule-desc { color: var(--text-dim); font-size: 13px; line-height: 1.55; }
+
+  /* Footer */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 48px 0 36px;
+    margin-top: 48px;
+  }
+  .footer-grid {
+    display: flex; justify-content: space-between;
+    align-items: center; gap: 24px; flex-wrap: wrap;
+  }
+  .footer-socials { display: flex; gap: 4px; }
+  .footer-social {
+    width: 36px; height: 36px; border-radius: 8px;
+    display: grid; place-items: center;
+    color: var(--text-dim); text-decoration: none;
+    transition: all 0.15s;
+    border: 1px solid transparent;
+  }
+  .footer-social:hover { color: var(--text); background: rgba(255,255,255,0.04); border-color: var(--border); }
+  .footer-social svg { width: 16px; height: 16px; }
+  .footer-meta { font-size: 12px; color: var(--text-muted); }
+  .footer-disclaimer {
+    font-size: 11px; color: var(--text-muted);
+    margin-top: 24px; line-height: 1.6;
+    max-width: 720px;
+  }
+
+  /* Floating code button */
+  .code-fab {
+    position: fixed; bottom: 24px; right: 24px;
+    z-index: 40;
+    background: var(--orange);
+    color: #0b0b10;
+    padding: 12px 18px;
+    border-radius: 999px;
+    font-family: var(--mono); font-weight: 700; font-size: 13px;
+    border: none; cursor: pointer;
+    display: inline-flex; align-items: center; gap: 8px;
+    letter-spacing: 0.04em;
+    box-shadow: 0 12px 32px -8px rgba(198, 255, 61, 0.5);
+    transition: transform 0.15s ease, background 0.15s ease;
+  }
+  .code-fab:hover { background: #D8FF66; transform: translateY(-2px); }
+  .code-fab.copied {
+    background: var(--green); color: #0b0b10;
+  }
+  .code-fab svg { width: 14px; height: 14px; }
+
+  /* Last updated */
+  .updated-line {
     text-align: center;
-    padding: 60px;
-    color: var(--text-gray);
-  }
-  
-  .spinner {
-    width: 40px;
-    height: 40px;
-    border: 4px solid rgba(255, 107, 43, 0.2);
-    border-top-color: var(--orange);
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-    margin: 0 auto 20px;
-  }
-  
-  @keyframes spin {
-    to { transform: rotate(360deg); }
-  }
-  
-  .empty {
-    text-align: center;
-    padding: 60px;
-    color: var(--text-gray);
-    font-size: 18px;
-  }
-  
-  .refresh-note {
-    text-align: center;
-    color: var(--text-dark);
-    font-size: 12px;
+    font-family: var(--mono); font-size: 11px;
+    color: var(--text-muted);
     margin-top: 20px;
+    letter-spacing: 0.04em;
   }
-  
-  /* Responsive */
-  @media (max-width: 768px) {
-    .container {
-      padding: 0 15px;
-    }
-    
-    .main-title {
-      font-size: 36px;
-    }
-    
-    .prize-amount {
-      font-size: 24px;
-    }
-    
-    .countdown-display {
-      gap: 10px;
-    }
-    
-    .countdown-number {
-      font-size: 18px;
-    }
-    
-    .hero-cards {
+  .updated-line .live-dot {
+    display: inline-block; width: 6px; height: 6px; border-radius: 50%;
+    background: var(--green); margin-right: 6px;
+    box-shadow: 0 0 6px var(--green);
+    animation: pulse 1.6s ease-in-out infinite;
+  }
+
+  /* Mobile */
+  @media (max-width: 880px) {
+    .hero { padding: 48px 0 32px; }
+    .hero-grid { grid-template-columns: 1fr; gap: 32px; }
+    .nav-links { display: none; }
+    section { padding: 48px 0; }
+    .podium {
       grid-template-columns: 1fr;
-      gap: 20px;
+      max-width: 360px;
     }
-    
-    .rewards-grid {
-      grid-template-columns: 1fr;
-      gap: 15px;
+    .podium-card.rank-1 { order: -1; padding-top: 40px; }
+    .lb-row {
+      grid-template-columns: 40px 1fr 80px 70px;
+      gap: 10px; padding: 14px 16px;
     }
-    
-    .table-header,
-    .table-row {
-      grid-template-columns: 60px 1fr 120px 80px;
-      gap: 10px;
-      padding: 15px 20px;
-    }
-    
-    .section-title {
-      font-size: 24px;
-    }
-    
-    .social-links {
-      gap: 15px;
+    .lb-row .col-bar { display: none; }
+    .lb-controls { gap: 10px; }
+    .filter-row { width: 100%; overflow-x: auto; }
+    .search-wrap { width: 100%; }
+    .code-fab { bottom: 16px; right: 16px; padding: 10px 14px; font-size: 12px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
     }
   }
 </style>
 </head>
 <body>
-<div class="header">
-  <div class="container">
-    <!-- Logo Row -->
-    <div class="logo-row">
-      <span class="orangie-text">ORANGIE</span>
-      <span class="logo-x">×</span>
-      <a href="https://shuffle.com/?r=orangie" target="_blank"><img src="https://shuffle.com/icons/logo.svg" alt="Shuffle" class="shuffle-logo"></a>
+
+<div class="ambient" id="ambient"></div>
+<div class="grid-bg"></div>
+<div class="scroll-progress" id="scroll-progress"></div>
+
+<!-- Nav -->
+<nav class="nav">
+  <div class="container nav-inner">
+    <div class="brand">
+      <span class="brand-mark">O</span>
+      <span>ORANGIE</span>
+      <span class="x">×</span>
+      <span class="partner">SHUFFLE</span>
     </div>
-    
-    <!-- Countdown Timer -->
-    <div class="countdown-timer">
-      <div class="countdown-label">Time Until Month End</div>
-      <div class="countdown-display">
-        <div class="countdown-unit">
-          <span class="countdown-number" id="days">--</span>
-          <span class="countdown-text">Days</span>
-        </div>
-        <div class="countdown-unit">
-          <span class="countdown-number" id="hours">--</span>
-          <span class="countdown-text">Hrs</span>
-        </div>
-        <div class="countdown-unit">
-          <span class="countdown-number" id="minutes">--</span>
-          <span class="countdown-text">Mins</span>
-        </div>
-      </div>
+    <div class="nav-links">
+      <a href="#leaderboard" class="nav-link">Leaderboard</a>
+      <a href="#stream" class="nav-link">Stream</a>
+      <a href="#rules" class="nav-link">How it works</a>
     </div>
-    
-    <h1 class="main-title">JOIN THE LEADERBOARD!</h1>
-    <div class="prize-amount">$1,000 Total Prize Pool</div>
-    
-    <div class="header-buttons">
-      <a href="#rules" class="btn btn-outline">Rules</a>
-      <a href="https://shuffle.com/?r=orangie" class="btn btn-orange">CODE: orangie</a>
+    <div class="nav-cta">
+      <span class="live-pill" id="live-pill" title="Stream status indicator">
+        <span class="dot"></span> LIVE
+      </span>
+      <a href="https://shuffle.com/?r=orangie" target="_blank" rel="noopener" class="btn btn-primary btn-sm">
+        Sign up ↗
+      </a>
     </div>
   </div>
-</div>
+</nav>
 
-<!-- Top 3 Hero Cards -->
-<div class="top-three">
-  <div class="container">
-    <h2 class="section-title">🏆 Top Performers</h2>
-    <div class="hero-cards" id="hero-cards">
-      <div class="loading">
-        <div class="spinner"></div>
-        Loading top performers...
+<!-- Hero -->
+<header class="hero">
+  <div class="container hero-grid">
+    <div>
+      <div class="eyebrow">Wager Race · <span id="month-label">This Month</span></div>
+      <h1>
+        Climb the leaderboard.<br>
+        <span class="accent">Take home cash.</span>
+      </h1>
+      <p class="hero-sub">
+        Sign up on Shuffle.com with code <strong style="color:var(--text)">ORANGIE</strong> and every dollar you wager moves you up the board. Top 14 players each month split the prize pool.
+      </p>
+      <div class="hero-cta-row">
+        <a href="https://shuffle.com/?r=orangie" target="_blank" rel="noopener" class="btn btn-primary">
+          Sign up with code ORANGIE
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+        <a href="#rules" class="btn btn-ghost">How it works</a>
       </div>
     </div>
-  </div>
-</div>
 
-<!-- Leaderboard Table -->
-<div class="leaderboard-section">
+    <aside class="countdown-card">
+      <div class="countdown-head">
+        <span class="countdown-title">Race ends in</span>
+        <span class="countdown-month" id="cycle-label">—</span>
+      </div>
+      <div class="countdown-grid">
+        <div class="cd-unit"><span class="cd-num" id="cd-days">--</span><span class="cd-lbl">Days</span></div>
+        <div class="cd-unit"><span class="cd-num" id="cd-hrs">--</span><span class="cd-lbl">Hours</span></div>
+        <div class="cd-unit"><span class="cd-num" id="cd-mins">--</span><span class="cd-lbl">Mins</span></div>
+        <div class="cd-unit"><span class="cd-num" id="cd-secs">--</span><span class="cd-lbl">Secs</span></div>
+      </div>
+      <div class="prize-strip">
+        <span class="prize-label">Prize pool</span>
+        <span class="prize-amount">$1,000</span>
+      </div>
+    </aside>
+  </div>
+</header>
+
+<!-- Podium -->
+<section id="podium-section">
   <div class="container">
-    <h2 class="section-title">📊 Full Leaderboard</h2>
-    <div class="leaderboard-table">
-      <div class="table-header">
+    <div class="section-head">
+      <div>
+        <h2>The podium</h2>
+        <p>Top three earners this cycle.</p>
+      </div>
+    </div>
+    <div class="podium" id="podium">
+      <div class="podium-card rank-2"><div class="medal">2</div><div class="podium-place">2nd Place</div><div class="podium-name">—</div></div>
+      <div class="podium-card rank-1"><div class="medal">1</div><div class="podium-place">1st Place</div><div class="podium-name">—</div></div>
+      <div class="podium-card rank-3"><div class="medal">3</div><div class="podium-place">3rd Place</div><div class="podium-name">—</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Leaderboard -->
+<section id="leaderboard">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <h2>Full leaderboard</h2>
+        <p>Updates every 5 minutes from Shuffle's affiliate API.</p>
+      </div>
+    </div>
+
+    <div class="lb-controls">
+      <div class="filter-row" role="tablist">
+        <button class="filter-pill active" data-filter="paid">In the money</button>
+        <button class="filter-pill" data-filter="10">Top 10</button>
+        <button class="filter-pill" data-filter="25">Top 25</button>
+        <button class="filter-pill" data-filter="all">Everyone</button>
+      </div>
+      <div class="search-wrap">
+        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+        <input type="text" class="search-input" id="search-input" placeholder="Search by username…">
+      </div>
+    </div>
+
+    <div class="lb-table">
+      <div class="lb-row head">
         <div>Rank</div>
         <div>Player</div>
-        <div>Wagered</div>
-        <div>Prize</div>
+        <div class="col-bar">Wagered</div>
+        <div style="text-align:right">Mobile</div>
+        <div style="text-align:right">Prize</div>
       </div>
-      <div id="leaderboard-rows">
-        <div class="loading">
-          <div class="spinner"></div>
-          Loading leaderboard...
-        </div>
+      <div id="lb-body">
+        <div class="lb-skeleton"></div>
+        <div class="lb-skeleton"></div>
+        <div class="lb-skeleton"></div>
+        <div class="lb-skeleton"></div>
+        <div class="lb-skeleton"></div>
+      </div>
+    </div>
+
+    <div class="updated-line" id="updated-line">
+      <span class="live-dot"></span> Loading…
+    </div>
+  </div>
+</section>
+
+<!-- Rules -->
+<section id="rules">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <h2>How it works</h2>
+        <p>Three steps. Real money. Every month.</p>
+      </div>
+    </div>
+    <div class="rules-grid">
+      <div class="rule-card">
+        <div class="rule-num">01</div>
+        <div class="rule-title">Sign up with code</div>
+        <div class="rule-desc">Create a Shuffle.com account using code <strong style="color:var(--orange)">ORANGIE</strong>. That links your wagers to this leaderboard.</div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-num">02</div>
+        <div class="rule-title">Wager to climb</div>
+        <div class="rule-desc">Every dollar you wager on Shuffle counts toward your monthly total. The board updates every 5 minutes.</div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-num">03</div>
+        <div class="rule-title">Top 14 win</div>
+        <div class="rule-desc">1st: $200 · 2nd: $150 · 3rd: $100 · 4th–14th: $50 each. Payouts at the end of every month.</div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-num">04</div>
+        <div class="rule-title">Get tipped live</div>
+        <div class="rule-desc">Catch the stream — Orangie tips leaderboard players directly on Shuffle. Tip history is shown on each player's row.</div>
       </div>
     </div>
   </div>
-</div>
+</section>
 
-<!-- Find Your Ranking -->
-<div class="find-ranking">
+<!-- Stream -->
+<section id="stream">
   <div class="container">
-    <h2 class="section-title">🔍 FIND YOUR RANKING</h2>
-    <div class="search-box">
-      <input type="text" class="search-input" placeholder="Enter your username..." id="search-input">
+    <div class="section-head">
+      <div>
+        <h2>Watch live</h2>
+        <p>Tips drop on stream. Be there.</p>
+      </div>
+      <a href="https://twitch.tv/orangieyt" target="_blank" rel="noopener" class="btn btn-ghost btn-sm">
+        Open in Twitch ↗
+      </a>
     </div>
-    <div id="search-result"></div>
-  </div>
-</div>
-
-<!-- Twitch Stream Section -->
-<div class="kick-section">
-  <div class="container">
-    <h2 class="section-title">🎮 Watch Orangie Live</h2>
-    <div class="kick-embed">
-      <iframe 
-        src="https://player.twitch.tv/?channel=orangieyt&parent=orangieshuffle.com" 
-        width="100%" 
-        height="450"
-        frameborder="0"
-        scrolling="no"
-        allowfullscreen>
-      </iframe>
+    <div class="stream-frame">
+      <iframe
+        src="https://player.twitch.tv/?channel=orangieyt&parent=orangieshuffle.com&muted=true"
+        allowfullscreen></iframe>
+    </div>
+    <div class="stream-meta">
+      <span class="stream-channel">Orangie<span class="stream-channel-handle">@orangieyt</span></span>
     </div>
   </div>
-</div>
+</section>
 
 <!-- Footer -->
-<div class="footer">
+<footer>
   <div class="container">
-    <div class="footer-code">USE CODE: ORANGIE</div>
-    <div class="social-links">
-      <a href="https://x.com/orangie" target="_blank" class="social-link">X: @orangie</a>
-      <a href="https://youtube.com/@orangieweb3" target="_blank" class="social-link">YouTube</a>
-      <a href="https://instagram.com/orangieyt" target="_blank" class="social-link">Instagram</a>
-      <a href="https://twitch.tv/orangieyt" target="_blank" class="social-link">Twitch</a>
+    <div class="footer-grid">
+      <div class="brand">
+        <span class="brand-mark">O</span>
+        <span>ORANGIE × SHUFFLE</span>
+      </div>
+      <div class="footer-socials">
+        <a href="https://x.com/orangie" target="_blank" rel="noopener" class="footer-social" aria-label="X">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </a>
+        <a href="https://youtube.com/@orangieweb3" target="_blank" rel="noopener" class="footer-social" aria-label="YouTube">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.016 3.016 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.016 3.016 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12z"/></svg>
+        </a>
+        <a href="https://instagram.com/orangieyt" target="_blank" rel="noopener" class="footer-social" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </a>
+        <a href="https://twitch.tv/orangieyt" target="_blank" rel="noopener" class="footer-social" aria-label="Twitch">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714Z"/></svg>
+        </a>
+      </div>
+      <div class="footer-meta">
+        Need help? <a href="https://shuffle.com/?r=orangie" target="_blank" rel="noopener" style="color:var(--orange);text-decoration:none">Contact Shuffle support ↗</a>
+      </div>
     </div>
-    <a href="https://shuffle.com/?r=orangie" class="btn btn-orange">Contact Support</a>
-    <p class="refresh-note" id="refresh-note"></p>
+    <p class="footer-disclaimer">
+      Promotional leaderboard for Shuffle.com affiliates. 18+ only. Gambling can be addictive — please play responsibly. If you or someone you know has a problem with gambling, visit begambleaware.org or call 1-800-GAMBLER.
+    </p>
   </div>
-</div>
+</footer>
+
+<button class="code-fab" id="code-fab" aria-label="Copy code ORANGIE">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+  <span id="code-fab-label">CODE: ORANGIE</span>
+</button>
 
 <script>
-// Use local cached data (updated every 5 min by GitHub Actions) to avoid CORS/ad-blocker issues
 const API = './data.json';
-const BASELINE = './baseline.json';
+const BASELINE_API = './baseline.json';
 
-// Tip data from Orangie — keyed by lowercase username variants
+// Tip data — keyed by lowercase username
 const TIPS = {
   slackzquant: [
     { amount: 227, date: "Mar 26, 2026 12:43 AM" },
@@ -735,258 +923,335 @@ const TIPS = {
     { amount: 200, date: "Mar 10, 2026 1:55 AM" },
     { amount: 50, date: "Feb 16, 2026 11:13 PM" }
   ],
-  skogs21: [
-    { amount: 150, date: "Mar 26, 2026 12:44 AM" }
-  ],
-  yoyo7: [
-    { amount: 50, date: "Mar 26, 2026 12:44 AM" }
-  ],
-  retrorelaxo: [
-    { amount: 50, date: "Mar 10, 2026 1:56 AM" }
-  ],
-  sammyk21: [
-    { amount: 100, date: "Mar 10, 2026 1:56 AM" }
-  ],
+  skogs21: [{ amount: 150, date: "Mar 26, 2026 12:44 AM" }],
+  yoyo7: [{ amount: 50, date: "Mar 26, 2026 12:44 AM" }],
+  retrorelaxo: [{ amount: 50, date: "Mar 10, 2026 1:56 AM" }],
+  sammyk21: [{ amount: 100, date: "Mar 10, 2026 1:56 AM" }],
   yevon666: [
     { amount: 100, date: "Mar 10, 2026 1:55 AM" },
     { amount: 346, date: "Jan 23, 2026 12:16 AM" }
   ],
-  frostyjays: [
-    { amount: 174, date: "Mar 10, 2026 1:54 AM" }
-  ],
-  realnotzeez: [
-    { amount: 32, date: "Feb 16, 2026 11:52 PM" }
-  ],
-  caydenx00: [
-    { amount: 337, date: "Feb 16, 2026 11:12 PM" }
-  ],
-  "zuni0x": [
-    { amount: 75, date: "Jan 23, 2026 12:55 AM" }
-  ],
-  mntrenches: [
-    { amount: 35, date: "Jan 23, 2026 12:54 AM" }
-  ]
+  frostyjays: [{ amount: 174, date: "Mar 10, 2026 1:54 AM" }],
+  realnotzeez: [{ amount: 32, date: "Feb 16, 2026 11:52 PM" }],
+  caydenx00: [{ amount: 337, date: "Feb 16, 2026 11:12 PM" }],
+  "zuni0x": [{ amount: 75, date: "Jan 23, 2026 12:55 AM" }],
+  mntrenches: [{ amount: 35, date: "Jan 23, 2026 12:54 AM" }]
 };
 
-// Username mapping for affiliate to tip usernames
 const USERNAME_MAP = {
-  slackzquant: "slackzquant",
-  mninvestz: "mninvestz",
-  retrorelaxo: "retrorelaxo",
-  sammyk21: "sammyk21",
-  "zuni0x": "zuni0x"
+  slackzquant: "slackzquant", mninvestz: "mninvestz",
+  retrorelaxo: "retrorelaxo", sammyk21: "sammyk21", "zuni0x": "zuni0x"
 };
 
-function getTips(username) {
-  const lower = username.toLowerCase();
-  return TIPS[lower] || TIPS[USERNAME_MAP[lower]] || null;
-}
+const PRIZE_TIERS = { 1: 200, 2: 150, 3: 100 };
 
-function maskUsername(username) {
-  if (username.length <= 4) return username;
-  return username.substring(0, 2) + '***' + username.substring(username.length - 2);
-}
+// Helpers
+const $ = (s, root = document) => root.querySelector(s);
+const $$ = (s, root = document) => [...root.querySelectorAll(s)];
 
-function formatMoney(amount) {
-  return '$' + amount.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
-}
+const getTips = (u) => {
+  const k = u.toLowerCase();
+  return TIPS[k] || TIPS[USERNAME_MAP[k]] || null;
+};
+const maskUsername = (u) => u.length <= 4 ? u : u.slice(0, 2) + '***' + u.slice(-2);
+const fmtMoney = (n) => '$' + Math.round(n).toLocaleString('en-US');
+const prizeFor = (rank) => rank <= 3 ? PRIZE_TIERS[rank] : (rank <= 14 ? 50 : 0);
+const normalizeUser = (u) => String(u || '').toLowerCase();
+const applyMonthlyBaseline = (data, baselineData = []) => {
+  const baseline = {};
+  baselineData.forEach(u => { baseline[normalizeUser(u.username)] = Number(u.lifetimeWagered) || 0; });
+  return data.map(u => ({
+    ...u,
+    lifetimeWagered: Math.max(0, (Number(u.lifetimeWagered) || 0) - (baseline[normalizeUser(u.username)] || 0))
+  }));
+};
 
-function getPrizeForRank(rank) {
-  if (rank === 1) return '$200';
-  if (rank === 2) return '$150';
-  if (rank === 3) return '$100';
-  if (rank >= 4 && rank <= 14) return '$50';
-  return '-';
-}
-
-function toggleTipDetails(badge) {
-  const details = badge.parentElement.parentElement.querySelector('.tip-details');
-  if (details) {
-    details.classList.toggle('open');
-    const arrow = badge.querySelector('.arrow');
-    if (arrow) {
-      arrow.textContent = details.classList.contains('open') ? '▲' : '▼';
-    }
-  }
-}
-
+// Countdown
 function updateCountdown() {
   const now = new Date();
-  const nextMonth = new Date(now.getFullYear(), now.getMonth() + 1, 1);
-  const timeLeft = nextMonth - now;
-  
-  const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-  
-  document.getElementById('days').textContent = days.toString().padStart(2, '0');
-  document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
-  document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+  const next = new Date(now.getFullYear(), now.getMonth() + 1, 1);
+  const diff = next - now;
+  const d = Math.floor(diff / 86400000);
+  const h = Math.floor((diff % 86400000) / 3600000);
+  const m = Math.floor((diff % 3600000) / 60000);
+  const s = Math.floor((diff % 60000) / 1000);
+  $('#cd-days').textContent = String(d).padStart(2, '0');
+  $('#cd-hrs').textContent = String(h).padStart(2, '0');
+  $('#cd-mins').textContent = String(m).padStart(2, '0');
+  $('#cd-secs').textContent = String(s).padStart(2, '0');
+  const monthName = now.toLocaleString('en-US', { month: 'long' });
+  $('#month-label').textContent = monthName + ' ' + now.getFullYear();
+  $('#cycle-label').textContent = monthName.toUpperCase();
 }
 
-let retryCount = 0;
+// Animated count-up
+function countUp(el, target, duration = 900) {
+  const start = performance.now();
+  const from = 0;
+  function frame(t) {
+    const p = Math.min((t - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - p, 3);
+    el.textContent = fmtMoney(from + (target - from) * eased);
+    if (p < 1) requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+}
 
-async function loadLeaderboard() {
-  try {
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 10000);
-    
-    const [dataRes, baseRes] = await Promise.all([
-      fetch(API, { signal: controller.signal, headers: { 'Accept': 'application/json' } }),
-      fetch(BASELINE, { signal: controller.signal, headers: { 'Accept': 'application/json' } }).catch(() => null)
-    ]);
-    clearTimeout(timeoutId);
-    
-    if (!dataRes.ok) throw new Error(`HTTP ${dataRes.status}`);
-    const data = await dataRes.json();
-    
-    let baseline = {};
-    if (baseRes && baseRes.ok) {
-      const baseData = await baseRes.json();
-      baseData.forEach(u => { baseline[u.username.toLowerCase()] = u.lifetimeWagered; });
-    }
-    
-    // Compute monthly wagered
-    data.forEach(user => {
-      const base = baseline[user.username.toLowerCase()] || 0;
-      user.monthlyWagered = Math.max(0, user.lifetimeWagered - base);
-    });
-    
-    retryCount = 0;
-    
-    const active = data
-      .filter(user => user.monthlyWagered > 0)
-      .sort((a, b) => b.monthlyWagered - a.monthlyWagered);
-    
-    if (!active.length) {
-      document.getElementById('hero-cards').innerHTML = '<div class="empty">No active players yet. Be the first!</div>';
-      document.getElementById('leaderboard-rows').innerHTML = '<div class="empty">No data available.</div>';
+// State
+let allPlayers = [];
+let activeFilter = 'paid';
+let searchQuery = '';
+
+function renderPodium(active) {
+  const top3 = active.slice(0, 3);
+  const slots = [top3[1], top3[0], top3[2]]; // 2nd, 1st, 3rd
+  const ranks = [2, 1, 3];
+  const places = ['2nd Place', '1st Place', '3rd Place'];
+  const cards = $$('#podium .podium-card');
+  cards.forEach((card, i) => {
+    const user = slots[i];
+    const rank = ranks[i];
+    card.querySelector('.podium-place').textContent = places[i];
+    if (!user) {
+      card.querySelector('.podium-name').textContent = '—';
+      card.querySelector('.podium-name').style.color = 'var(--text-muted)';
+      const old = card.querySelector('.podium-wager');
+      if (old) old.remove();
+      const oldL = card.querySelector('.podium-wager-lbl');
+      if (oldL) oldL.remove();
+      const oldP = card.querySelector('.podium-prize');
+      if (oldP) oldP.remove();
       return;
     }
-    
-    // Update hero cards (top 3)
-    const heroCardsHtml = active.slice(0, 3).map((user, index) => {
-      const rank = index + 1;
-      const cardClass = rank === 1 ? 'first' : rank === 2 ? 'second' : 'third';
-      const crown = rank === 1 ? '👑' : rank === 2 ? '🥈' : '🥉';
-      
-      return `
-        <div class="hero-card ${cardClass}">
-          <span class="crown">${crown}</span>
-          <div class="hero-rank">${rank === 1 ? '1st' : rank === 2 ? '2nd' : '3rd'} Place</div>
-          <div class="hero-username">${maskUsername(user.username || '???')}</div>
-          <div class="hero-wagered">${formatMoney(user.monthlyWagered)} wagered</div>
-          <div class="hero-prize">${getPrizeForRank(rank)}</div>
-        </div>
-      `;
-    }).join('');
-    
-    document.getElementById('hero-cards').innerHTML = heroCardsHtml;
-    
-    // Update leaderboard table (all players)
-    const leaderboardHtml = active.map((user, index) => {
-      const rank = index + 1;
-      const tips = getTips(user.username);
-      const tipTotal = tips ? tips.reduce((sum, tip) => sum + tip.amount, 0) : 0;
-      
-      let tipHtml = '';
-      if (tips && tipTotal > 0) {
-        const detailLines = tips
-          .sort((a, b) => new Date(b.date) - new Date(a.date))
-          .map(tip => `
-            <div class="tip-line">
-              <span class="tip-amt">${formatMoney(tip.amount)}</span>
-              <span class="tip-date">${tip.date}</span>
-            </div>
-          `).join('');
-        
-        tipHtml = `
-          <div class="tip-badge" onclick="toggleTipDetails(this)">
-            🍊 Tipped ${formatMoney(tipTotal)} by Orangie <span class="arrow">▼</span>
-          </div>
-        `;
-        
-        // Add tip details row after this row
-        tipHtml += `
-          <div class="tip-details">
-            <div class="tip-details-header">🍊 Tip History from Orangie</div>
-            ${detailLines}
-          </div>
-        `;
-      }
-      
-      return `
-        <div class="table-row">
-          <div class="rank-number">#${rank}</div>
-          <div class="player-info">
-            <div class="player-name">${maskUsername(user.username || '???')}</div>
-            ${tipHtml}
-          </div>
-          <div class="wagered-amount">${formatMoney(user.monthlyWagered)}</div>
-          <div class="prize-cell">${getPrizeForRank(rank)}</div>
-        </div>
-      `;
-    }).join('');
-    
-    document.getElementById('leaderboard-rows').innerHTML = leaderboardHtml;
-    
-    // Update search functionality
-    const searchInput = document.getElementById('search-input');
-    const searchResult = document.getElementById('search-result');
-    
-    searchInput.addEventListener('input', function() {
-      const query = this.value.trim().toLowerCase();
-      if (!query) {
-        searchResult.innerHTML = '';
-        return;
-      }
-      
-      const found = active.find((user, index) => 
-        user.username.toLowerCase().includes(query)
-      );
-      
-      if (found) {
-        const userRank = active.findIndex(u => u.username === found.username) + 1;
-        searchResult.innerHTML = `
-          <div style="margin-top: 20px; padding: 20px; background: rgba(255, 255, 255, 0.03); border-radius: 10px; border: 1px solid var(--border);">
-            <h3 style="color: var(--orange); margin-bottom: 10px;">Found: ${maskUsername(found.username)}</h3>
-            <p style="color: var(--text-light);">Rank: #${userRank}</p>
-            <p style="color: var(--text-light);">Wagered: ${formatMoney(found.monthlyWagered)}</p>
-            <p style="color: var(--success);">Prize: ${getPrizeForRank(userRank)}</p>
-          </div>
-        `;
-      } else {
-        searchResult.innerHTML = `
-          <div style="margin-top: 20px; padding: 20px; background: rgba(239, 68, 68, 0.1); border-radius: 10px; border: 1px solid rgba(239, 68, 68, 0.2);">
-            <p style="color: #ef4444;">Username not found</p>
-          </div>
-        `;
-      }
-    });
-    
-    // Update refresh note
-    const now = new Date();
-    document.getElementById('refresh-note').textContent = 
-      `Auto-refreshes every 60s • Last updated ${now.toLocaleTimeString()}`;
-    
-  } catch (error) {
-    console.error('Failed to load leaderboard:', error);
-    retryCount++;
-    const retryIn = Math.min(retryCount * 5, 30);
-    document.getElementById('hero-cards').innerHTML = `<div class="empty">Failed to load data. Retrying in ${retryIn}s...<br><small style="color:#666;font-size:12px">If this persists, try disabling ad blockers or VPN</small></div>`;
-    document.getElementById('leaderboard-rows').innerHTML = `<div class="empty">Failed to load data. Retrying in ${retryIn}s...</div>`;
-    setTimeout(loadLeaderboard, retryIn * 1000);
+    card.querySelector('.podium-name').textContent = maskUsername(user.username);
+    card.querySelector('.podium-name').style.color = '';
+
+    let wagerEl = card.querySelector('.podium-wager');
+    if (!wagerEl) {
+      wagerEl = document.createElement('div');
+      wagerEl.className = 'podium-wager';
+      card.appendChild(wagerEl);
+      const lbl = document.createElement('div');
+      lbl.className = 'podium-wager-lbl';
+      lbl.textContent = 'Wagered';
+      card.appendChild(lbl);
+    }
+    countUp(wagerEl, user.lifetimeWagered);
+
+    let prizeEl = card.querySelector('.podium-prize');
+    if (!prizeEl) {
+      prizeEl = document.createElement('div');
+      prizeEl.className = 'podium-prize';
+      card.appendChild(prizeEl);
+    }
+    prizeEl.textContent = '$' + prizeFor(rank) + ' prize';
+  });
+}
+
+function renderLeaderboard() {
+  const body = $('#lb-body');
+  let list = [...allPlayers];
+
+  if (activeFilter === 'paid') list = list.slice(0, 14);
+  else if (activeFilter === '10') list = list.slice(0, 10);
+  else if (activeFilter === '25') list = list.slice(0, 25);
+
+  if (searchQuery) {
+    const q = searchQuery.toLowerCase();
+    list = list.filter(p => p.username.toLowerCase().includes(q));
+  }
+
+  if (!list.length) {
+    body.innerHTML = '<div class="lb-empty">No players match this view.</div>';
     return;
+  }
+
+  const max = allPlayers[0]?.lifetimeWagered || 1;
+
+  body.innerHTML = list.map((p) => {
+    const rank = p._rank;
+    const tips = getTips(p.username);
+    const tipTotal = tips ? tips.reduce((s, t) => s + t.amount, 0) : 0;
+    const pct = Math.max(2, (p.lifetimeWagered / max) * 100);
+    const prize = prizeFor(rank);
+    const isMatch = searchQuery && p.username.toLowerCase().includes(searchQuery.toLowerCase());
+
+    let tipBadge = '';
+    let tipDrawer = '';
+    if (tips && tipTotal > 0) {
+      tipBadge = `<span class="lb-tip" data-tip-toggle>
+        🎁 Tipped ${fmtMoney(tipTotal)}
+        <svg class="tip-arrow" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 9l6 6 6-6"/></svg>
+      </span>`;
+      const lines = [...tips].sort((a, b) => new Date(b.date) - new Date(a.date)).map(t => `
+        <div class="tip-line">
+          <span class="tip-amt">${fmtMoney(t.amount)}</span>
+          <span class="tip-date">${t.date}</span>
+        </div>`).join('');
+      tipDrawer = `<div class="tip-drawer">
+        <div class="tip-drawer-head">Tips from Orangie</div>${lines}
+      </div>`;
+    }
+
+    return `<div class="lb-row player ${isMatch ? 'highlight' : ''}">
+      <div class="lb-rank ${rank <= 3 ? 'top' : ''}">${String(rank).padStart(2, '0')}</div>
+      <div class="lb-player-cell">
+        <div class="lb-name">${maskUsername(p.username)}</div>
+        ${tipBadge}
+      </div>
+      <div class="lb-bar-cell col-bar">
+        <div class="lb-bar-amt">${fmtMoney(p.lifetimeWagered)}</div>
+        <div class="lb-bar"><div class="lb-bar-fill" style="--w:${pct}%"></div></div>
+      </div>
+      <div class="lb-bar-amt" style="text-align:right">${fmtMoney(p.lifetimeWagered)}</div>
+      <div class="lb-prize ${prize ? '' : 'none'}" style="text-align:right">${prize ? '$' + prize : '—'}</div>
+      ${tipDrawer}
+    </div>`;
+  }).join('');
+
+  // Animate bar fills in next frame
+  requestAnimationFrame(() => {
+    $$('.lb-bar-fill', body).forEach((el, i) => {
+      const w = el.style.getPropertyValue('--w');
+      setTimeout(() => { el.style.transform = `scaleX(${parseFloat(w)/100})`; }, i * 25);
+    });
+  });
+
+  // Tip toggle wiring
+  $$('[data-tip-toggle]', body).forEach(badge => {
+    badge.addEventListener('click', () => {
+      const row = badge.closest('.lb-row');
+      const drawer = row.querySelector('.tip-drawer');
+      const isOpen = drawer.classList.toggle('open');
+      badge.classList.toggle('tip-open', isOpen);
+    });
+  });
+}
+
+async function loadData() {
+  try {
+    const ctrl = new AbortController();
+    const t = setTimeout(() => ctrl.abort(), 10000);
+    const [res, baselineRes] = await Promise.all([
+      fetch(API, { signal: ctrl.signal, headers: { 'Accept': 'application/json' } }),
+      fetch(BASELINE_API, { signal: ctrl.signal, headers: { 'Accept': 'application/json' } }).catch(() => null)
+    ]);
+    clearTimeout(t);
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const data = await res.json();
+    const baselineData = baselineRes && baselineRes.ok ? await baselineRes.json() : [];
+    const monthlyData = applyMonthlyBaseline(data, baselineData);
+
+    allPlayers = monthlyData
+      .filter(u => u.lifetimeWagered > 0)
+      .sort((a, b) => b.lifetimeWagered - a.lifetimeWagered)
+      .map((u, i) => ({ ...u, _rank: i + 1 }));
+
+    if (!allPlayers.length) {
+      $('#lb-body').innerHTML = '<div class="lb-empty">No active players yet — be the first!</div>';
+      $('#updated-line').innerHTML = '<span class="live-dot"></span> Updated ' + new Date().toLocaleTimeString();
+      return;
+    }
+
+    renderPodium(allPlayers);
+    renderLeaderboard();
+    $('#updated-line').innerHTML = '<span class="live-dot"></span> Live · updated ' + new Date().toLocaleTimeString();
+  } catch (err) {
+    console.error('load failed', err);
+    $('#lb-body').innerHTML = '<div class="lb-empty">Couldn\'t load the leaderboard. Retrying…<br><small style="color:var(--text-muted);font-size:11px;margin-top:8px;display:block">If this persists, disable ad blockers / VPN</small></div>';
+    setTimeout(loadData, 8000);
   }
 }
 
-// Initialize
-updateCountdown();
-loadLeaderboard();
+// Filters
+$$('.filter-pill').forEach(pill => {
+  pill.addEventListener('click', () => {
+    $$('.filter-pill').forEach(p => p.classList.remove('active'));
+    pill.classList.add('active');
+    activeFilter = pill.dataset.filter;
+    renderLeaderboard();
+  });
+});
 
-// Update every minute
-setInterval(updateCountdown, 60000);
-setInterval(loadLeaderboard, 60000);
+// Search
+let searchTimer;
+$('#search-input').addEventListener('input', (e) => {
+  clearTimeout(searchTimer);
+  const v = e.target.value.trim();
+  searchTimer = setTimeout(() => {
+    searchQuery = v;
+    if (v && activeFilter !== 'all') {
+      // expand to all when searching so they can find anyone
+      $$('.filter-pill').forEach(p => p.classList.toggle('active', p.dataset.filter === 'all'));
+      activeFilter = 'all';
+    }
+    renderLeaderboard();
+    if (v) {
+      // scroll first match into view
+      requestAnimationFrame(() => {
+        const hl = $('.lb-row.highlight');
+        if (hl) hl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+    }
+  }, 120);
+});
+
+// Copy code
+$('#code-fab').addEventListener('click', async () => {
+  try {
+    await navigator.clipboard.writeText('ORANGIE');
+    const fab = $('#code-fab');
+    const lbl = $('#code-fab-label');
+    const prev = lbl.textContent;
+    fab.classList.add('copied');
+    lbl.textContent = 'COPIED ✓';
+    setTimeout(() => {
+      fab.classList.remove('copied');
+      lbl.textContent = prev;
+    }, 1600);
+  } catch {
+    window.open('https://shuffle.com/?r=orangie', '_blank');
+  }
+});
+
+// Cursor-following ambient (desktop only)
+if (window.matchMedia('(pointer: fine)').matches) {
+  const ambient = $('#ambient');
+  let raf;
+  window.addEventListener('mousemove', (e) => {
+    if (raf) return;
+    raf = requestAnimationFrame(() => {
+      const x = (e.clientX / window.innerWidth) * 100;
+      const y = (e.clientY / window.innerHeight) * 100;
+      ambient.style.setProperty('--mx', x + '%');
+      ambient.style.setProperty('--my', y + '%');
+      raf = null;
+    });
+  });
+}
+
+// Scroll progress + nav active
+const sections = ['leaderboard', 'stream', 'rules'];
+const navLinks = $$('.nav-link');
+function onScroll() {
+  const sp = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+  $('#scroll-progress').style.width = (Math.min(sp, 1) * 100) + '%';
+
+  let active = null;
+  for (const id of sections) {
+    const el = document.getElementById(id);
+    if (el && el.getBoundingClientRect().top < 200) active = id;
+  }
+  navLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + active));
+}
+window.addEventListener('scroll', onScroll, { passive: true });
+
+// Init
+updateCountdown();
+loadData();
+setInterval(updateCountdown, 1000);
+setInterval(loadData, 60000);
 </script>
+
 </body>
 </html>
