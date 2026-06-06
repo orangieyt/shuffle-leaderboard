@@ -14,6 +14,32 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Roll monthly baseline
+        run: |
+          python3 - <<'PY'
+          import json
+          from datetime import datetime
+          from zoneinfo import ZoneInfo
+
+          month = datetime.now(ZoneInfo("America/New_York")).strftime("%Y-%m")
+          try:
+            with open("meta.json", "r", encoding="utf-8") as f:
+              meta = json.load(f)
+          except FileNotFoundError:
+            meta = {}
+
+          if meta.get("month") != month:
+            with open("data.json", "r", encoding="utf-8") as f:
+              data = json.load(f)
+            with open("baseline.json", "w", encoding="utf-8") as f:
+              json.dump(data, f, separators=(",", ":"))
+            with open("meta.json", "w", encoding="utf-8") as f:
+              json.dump({"month": month}, f, separators=(",", ":"))
+            print(f"Rolled baseline to {month}")
+          else:
+            print(f"Baseline already current for {month}")
+          PY
+
       - name: Fetch stats from Shuffle API
         run: |
           curl -s "https://affiliate.shuffle.com/stats/949cf925-a4e8-47c6-a7cb-3e2d99335d02" -o data.json
@@ -24,7 +50,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data.json
+          git add data.json baseline.json meta.json
           if git diff --cached --quiet; then
             echo "No changes"
           else
